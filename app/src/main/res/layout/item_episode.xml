@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        app:cardElevation="0dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.CardView
+                android:layout_margin="10dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="80dp"
+                    android:layout_height="80dp">
+                    <ImageView
+                        android:id="@+id/image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    <ProgressBar
+                        android:layout_alignParentBottom="true"
+                        android:visibility="gone"
+                        android:id="@+id/progress"
+                        android:layout_width="80dp"
+                        android:layout_height="4dp"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:progress="20"
+                        android:elevation="0dp"
+                        android:progressTint="@color/colorAccent" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+            <LinearLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    tools:text="title"
+                    android:id="@+id/episodeTitle"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:textSize="15sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    tools:text="description"
+                    android:id="@+id/description"
+                    android:alpha="0.6"
+                    android:textSize="15sp"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/date"
+                        android:textStyle="italic"
+                        android:maxLines="3"
+                        android:textSize="12sp"
+                        android:alpha="0.7"
+                        android:ellipsize="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:text="   •    "
+                        android:textSize="12sp"
+                        android:alpha="0.7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/duration"
+                        android:textSize="12sp"
+                        android:alpha="0.7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

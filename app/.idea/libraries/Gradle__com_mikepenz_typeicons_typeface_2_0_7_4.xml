@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.mikepenz:typeicons-typeface-2.0.7.4">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/typeicons-typeface-2.0.7.4.aar/13c2e3675bba5b331d8f77594a6424e0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/typeicons-typeface-2.0.7.4.aar/13c2e3675bba5b331d8f77594a6424e0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mikepenz/typeicons-typeface/2.0.7.4/953d88a21d77fc96a3a8551506ad5c28e9b926f1/typeicons-typeface-2.0.7.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

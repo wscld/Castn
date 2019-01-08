@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.wslclds.castn.fragments.PodcastFragment">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <RelativeLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/topLayout"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    android:background="@color/colorPrimaryDark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/header"
+                        android:padding="15dp"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.CardView
+                            app:cardCornerRadius="50dp"
+                            app:cardElevation="0dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp">
+                            <ImageView
+                                android:id="@+id/image"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </android.support.v7.widget.CardView>
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/description"
+                                android:textColor="#fff"
+                                android:textSize="17sp"
+                                android:alpha="0.7"
+                                android:maxLines="4"
+                                android:ellipsize="end"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <com.arlib.floatingsearchview.FloatingSearchView
+                        android:layout_below="@id/topLayout"
+                        android:id="@+id/searchView"
+                        android:elevation="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        app:floatingSearch_searchHint="Search for episodes..."
+                        app:floatingSearch_suggestionsListAnimDuration="250"
+                        app:floatingSearch_leftActionMode="showSearch"
+                        app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:text=""
+                            android:id="@+id/episodeCount"
+                            android:layout_weight="1"
+                            android:textColor="#fff"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                        <Button
+                            android:id="@+id/subscribe"
+                            android:textColor="#fff"
+                            android:text="Subscribe"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                    <ProgressBar
+                        android:id="@+id/loadingEpisodeCount"
+                        android:indeterminate="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:indeterminateTint="#fff"
+                        android:layout_marginBottom="-7dp"
+                        android:layout_marginTop="-4dp" />
+                </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_below="@+id/topLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

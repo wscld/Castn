@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.bskim:maxheightscrollview-1.0.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/maxheightscrollview-1.0.0.aar/f123d283a58b35963113d48004f1bfca/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/maxheightscrollview-1.0.0.aar/f123d283a58b35963113d48004f1bfca/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.bskim/maxheightscrollview/1.0.0/bbd873d2c5bddfc11c9d5e49a23d3416392ac0bd/maxheightscrollview-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

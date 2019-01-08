@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- light theme -->
+    <color name="colorPrimary">#fafafa</color>
+    <color name="colorPrimaryDark">#c7c7c7</color>
+    <color name="colorPrimaryDarkDarker">#a4a4a4</color>
+    <color name="colorAccent">#F44336</color>
+    <!-- dark theme -->
+    <color name="darkThemeColorPrimary">#363636</color>
+    <color name="darkThemeColorPrimaryDark">#212121</color>
+    <color name="darkThemeColorPrimaryDarkDarker">#000</color>
+    <color name="darkThemeColorAccent">#F44336</color>
+    <!-- bottomnav light-->
+    <color name="bottomNavDefault">#5d000000</color>
+    <color name="bottomNavSelected">#af000000</color>
+    <!-- bottomnav dark-->
+    <color name="darkBottomNavDefault">#5dffffff</color>
+    <color name="darkBottomNavSelected">#afffffff</color>
+    <!-- other colors -->
+    <color name="backgroundLight">#f1f1f1</color>
+    <color name="backgroundDark">#f1f1f1</color>
+    <color name="lightDark">#16000000</color>
+    <color name="whiteTransparent">#a4ffffff</color>
+    <color name="transparentDark">#27000000</color>
+    <color name="transparentDark2">#41000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#fff</color>
+    <color name="whiteDarker">#fff</color>
+    <color name="dark">#2b2b2b</color>
+    <color name="dark2">#767676</color>
+</resources>

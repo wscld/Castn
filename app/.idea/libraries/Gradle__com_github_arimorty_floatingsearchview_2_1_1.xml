@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.arimorty:floatingsearchview-2.1.1">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/floatingsearchview-2.1.1.aar/546971541ae846a62032ba950f0d2fa6/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/floatingsearchview-2.1.1.aar/546971541ae846a62032ba950f0d2fa6/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/floatingsearchview-2.1.1.aar/546971541ae846a62032ba950f0d2fa6/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.arimorty/floatingsearchview/2.1.1/5af5c30598fc2a62289e6870cf51cf8aea0ccc48/floatingsearchview-2.1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

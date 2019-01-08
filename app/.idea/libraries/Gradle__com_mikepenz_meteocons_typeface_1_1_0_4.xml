@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.mikepenz:meteocons-typeface-1.1.0.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/meteocons-typeface-1.1.0.4.aar/1d90e1f33839c3c53eaeb3bbc376844f/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/meteocons-typeface-1.1.0.4.aar/1d90e1f33839c3c53eaeb3bbc376844f/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mikepenz/meteocons-typeface/1.1.0.4/eaa14d9f4e0ad9cadb74da3b84a22b19c38623fe/meteocons-typeface-1.1.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

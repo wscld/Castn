@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="load_more_item_id" type="id"/>
+    <item name="episode_item_id" type="id"/>
+    <item name="playlist_episode_item_id" type="id"/>
+    <item name="podcast_item_id" type="id" />
+    <item name="subscription_item_id" type="id"/>
+    <item name="timeline_item_id" type="id"/>
+    <item name="download_item_id" type="id" />
+    <item name="playlist_item_id" type="id" />
+    <item name="covers_item_id" type="id" />
+    <item name="text_header_item_id" type="id" />
+    <item name="menu_item_id" type="id" />
+    <item name="timeline_item_ad_id" type="id" />
+    <item name="podcast_group_item_id" type="id" />
+    <item name="podcast_grid_item_id" type="id" />
+    <item name="license_item_id" type="id" />
+</resources>

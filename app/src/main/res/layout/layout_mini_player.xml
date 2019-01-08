@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp"
+    android:id="@+id/miniBackground"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    app:cardBackgroundColor="@color/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="65dp">
+        <ProgressBar
+            android:id="@+id/miniProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progress="00"
+            android:progressTint="@color/whiteTransparent"
+            android:layout_marginBottom="-7dp"
+            android:layout_marginTop="-7dp" />
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <android.support.v7.widget.CardView
+                android:layout_marginLeft="10dp"
+                app:cardCornerRadius="5dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+                <ImageView
+                    android:id="@+id/miniImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </android.support.v7.widget.CardView>
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/miniTitle"
+                    android:textColor="@color/white"
+                    android:text="title"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/miniAuthor"
+                    android:textColor="@color/white"
+                    android:text="author"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:textSize="12sp"
+                    android:alpha="0.7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <ImageButton
+                android:padding="15dp"
+                android:tint="@color/white"
+                android:id="@+id/miniPlayPause"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_marginRight="10dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
