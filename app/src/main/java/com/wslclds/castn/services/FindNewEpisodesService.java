@@ -62,18 +62,20 @@ public class FindNewEpisodesService extends JobService {
 
 
                                 if(new Date().getTime()-latestPubDate < DateUtils.YEAR_IN_MILLIS) { //skip inactive podcasts
-                                    ArrayList<Episode> episodes = parser.parseEpisodesUntil(podcast.getUrl(), latestPubDate);
-                                    newEpisodes += episodes.size();
-                                    if (episodes.size() > 0) {
-                                        databaseManager.storeEpisodes(episodes);
-                                        lastPodcast = podcast;
-                                    }
+                                    if (new Date().getTime() - latestPubDate > (6*DateUtils.HOUR_IN_MILLIS)) {
+                                        ArrayList<Episode> episodes = parser.parseEpisodesUntil(podcast.getUrl(), latestPubDate);
+                                        newEpisodes += episodes.size();
+                                        if (episodes.size() > 0) {
+                                            databaseManager.storeEpisodes(episodes);
+                                            lastPodcast = podcast;
+                                        }
 
-                                    if (helper.isAutomaticDownload()) {
-                                        helper.makeNetworkSafeDownload(episodes);
-                                    }
+                                        if (helper.isAutomaticDownload()) {
+                                            helper.makeNetworkSafeDownload(episodes);
+                                        }
 
-                                    databaseManager.updatePodcastPubDate(podcast.getUrl());
+                                        databaseManager.updatePodcastPubDate(podcast.getUrl());
+                                    }
                                 }
 
                             }else{ // no episodes cached, load all episodes

@@ -536,6 +536,37 @@ public class DatabaseManager {
         return episodes;
     }
 
+    public long getFrequency(String url){
+        Realm realm = getRealmInstance();
+        realm.refresh();
+        int limit = 10;
+        int i = 0;
+
+        ArrayList<Long> dates = new ArrayList();
+        RealmResults<Episode> episodesRealm = realm.where(Episode.class).contains("url",url).sort("pubDate",Sort.DESCENDING).findAll();
+        if(episodesRealm != null){
+            for(Episode episode : episodesRealm){
+                if(episode != null){
+                    if(i < limit){
+                        dates.add(episode.getPubDate());
+                        i++;
+                    }else {
+                        break;
+                    }
+                }
+            }
+        }
+
+        long frequency = 0;
+        for(Long l : dates){
+            frequency +=l;
+        }
+        frequency = frequency/dates.size();
+
+        realm.close();
+        return frequency;
+    }
+
     public ArrayList<Episode> searchEpisodes(String url, String query){
         Realm realm = getRealmInstance();
         realm.refresh();

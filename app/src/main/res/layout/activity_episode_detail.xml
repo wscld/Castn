@@ -24,6 +24,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
                 <android.support.v7.widget.CardView
+                    app:cardBackgroundColor="?attr/cardColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="0dp"
@@ -53,6 +54,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
                                     <android.support.v7.widget.CardView
+                                        app:cardBackgroundColor="?attr/cardColor"
                                         android:layout_margin="10dp"
                                         app:cardElevation="0dp"
                                         app:cardCornerRadius="10dp"
@@ -88,7 +90,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content">
                                             <android.support.v7.widget.CardView
-                                                app:cardBackgroundColor="?attr/colorPrimary"
+                                                app:cardBackgroundColor="?attr/cardColor"
                                                 app:cardCornerRadius="5dp"
                                                 app:cardElevation="0dp"
                                                 android:layout_marginRight="10dp"
@@ -183,6 +185,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
                             <android.support.v7.widget.CardView
+                                app:cardBackgroundColor="?attr/cardColor"
                                 android:layout_marginTop="10dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">

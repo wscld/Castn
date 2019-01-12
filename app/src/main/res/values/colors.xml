@@ -5,11 +5,15 @@
     <color name="colorPrimaryDark">#c7c7c7</color>
     <color name="colorPrimaryDarkDarker">#a4a4a4</color>
     <color name="colorAccent">#F44336</color>
+    <color name="lightCardColor">#fdfdfd</color>
+    <color name="lightInverseColorPrimary">#000</color>
     <!-- dark theme -->
-    <color name="darkThemeColorPrimary">#363636</color>
-    <color name="darkThemeColorPrimaryDark">#212121</color>
-    <color name="darkThemeColorPrimaryDarkDarker">#000</color>
+    <color name="darkThemeColorPrimary">#404552</color>
+    <color name="darkThemeColorPrimaryDark">#383c4a</color>
+    <color name="darkThemeColorPrimaryDarkDarker">#2b2d38</color>
     <color name="darkThemeColorAccent">#F44336</color>
+    <color name="darkCardColor">#454a58</color>
+    <color name="darkInverseColorPrimary">#FFF</color>
     <!-- bottomnav light-->
     <color name="bottomNavDefault">#5d000000</color>
     <color name="bottomNavSelected">#af000000</color>
@@ -20,11 +24,12 @@
     <color name="backgroundLight">#f1f1f1</color>
     <color name="backgroundDark">#f1f1f1</color>
     <color name="lightDark">#16000000</color>
-    <color name="whiteTransparent">#a4ffffff</color>
     <color name="transparentDark">#27000000</color>
     <color name="transparentDark2">#41000000</color>
+    <color name="transparentDark3">#01000000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#fff</color>
+    <color name="whiteTransparent">#6effffff</color>
     <color name="whiteDarker">#fff</color>
     <color name="dark">#2b2b2b</color>
     <color name="dark2">#767676</color>

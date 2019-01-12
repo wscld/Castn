@@ -13,6 +13,8 @@ import android.os.IBinder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -276,6 +278,10 @@ public class MainActivity extends SupportActivity{
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         MenuItem item = menu.findItem(R.id.action_search);
+        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_action_action_search, null);
+        drawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(drawable, themeHelper.getTextColor());
+        item.setIcon(drawable);
         searchView.setMenuItem(item);
 
         if(toolbar.getTitle().equals("Timeline")){

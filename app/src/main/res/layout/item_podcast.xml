@@ -6,6 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.CardView
+        app:cardBackgroundColor="?attr/cardColor"
+        android:foreground="?android:attr/selectableItemBackground"
         android:layout_marginTop="1dp"
         android:layout_marginBottom="1dp"
         app:cardElevation="0dp"
@@ -18,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <android.support.v7.widget.CardView
+                app:cardBackgroundColor="?attr/cardColor"
                 app:cardCornerRadius="30dp"
                 app:cardElevation="0dp"
                 android:layout_width="wrap_content"
