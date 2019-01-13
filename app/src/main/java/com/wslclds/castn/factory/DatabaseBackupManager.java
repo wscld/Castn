@@ -38,6 +38,11 @@ public class DatabaseBackupManager {
         }
     }
 
+    public boolean backupExists(){
+        File exportRealmFile = new File(getStorageFolder(), EXPORT_REALM_FILE_NAME);
+        return exportRealmFile.exists();
+    }
+
     public boolean backup() {
         File exportRealmFile;
         Log.d(TAG, "Realm DB Path = " + realm.getPath());
@@ -53,9 +58,6 @@ public class DatabaseBackupManager {
         } catch (Exception e) {
             return false;
         }
-
-        String msg = "File exported to Path: " + getStorageFolder() + "/" + EXPORT_REALM_FILE_NAME;
-        Log.d(TAG, msg);
 
         realm.close();
 

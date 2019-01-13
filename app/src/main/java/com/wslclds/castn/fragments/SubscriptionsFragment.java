@@ -94,6 +94,7 @@ public class SubscriptionsFragment extends SupportFragment {
     }
 
     private void loadSubscriptions(){
+        itemAdapter.clear();
 
         DatabaseManager databaseManager = new DatabaseManager(getContext());
         List<Podcast> podcasts = databaseManager.getPodcasts();

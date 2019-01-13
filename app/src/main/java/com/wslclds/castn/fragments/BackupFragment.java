@@ -90,8 +90,25 @@ public class BackupFragment extends SupportFragment{
                                 .runtime()
                                 .permission(Permission.Group.STORAGE)
                                 .onGranted(permissions -> {
-                                    databaseBackupManager.backup();
-                                    new AlertBuilder(getContext(), "Success", "Backup data stored in" + databaseBackupManager.getStorageFolder()).show();
+                                    if(databaseBackupManager.backupExists()){
+                                        new AlertBuilder(getContext(), "There is already a backup file", "Do you want to replace it?", new AlertBuilder.onButtonClick2() {
+                                            @Override
+                                            public void onConfirm() {
+                                                if(databaseBackupManager.backup()) {
+                                                    new AlertBuilder(getContext(), "Success", "Backup data stored in" + databaseBackupManager.getStorageFolder()).show();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancel() {
+
+                                            }
+                                        }).show();
+                                    }else{
+                                        if(databaseBackupManager.backup()) {
+                                            new AlertBuilder(getContext(), "Success", "Backup data stored in" + databaseBackupManager.getStorageFolder()).show();
+                                        }
+                                    }
                                 })
                                 .onDenied(permissions -> {
                                     new AlertBuilder(getContext(), "Permission denied", "Storage permission is needed").show();
