@@ -159,39 +159,24 @@ public class TimelineFragment extends SupportFragment {
             itemAdapter.clear();
         }
         loadMoreItemItemAdapter.clear();
-        @SuppressLint("StaticFieldLeak") AsyncTask asyncTask = new AsyncTask() {
-            ArrayList timelineItems;
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                DatabaseManager databaseManager = new DatabaseManager(getContext());
-                //AdRequest adRequest = new AdRequest.Builder().addTestDevice("8DEC2D4B262561CBA8526DF1C945BFCF").build();
-                //TimelineItemAd timelineItemAd = new TimelineItemAd(adRequest);
-                timelineItems = new ArrayList<>();
-                ArrayList<PodcastAndEpisode> podcastAndEpisodes = databaseManager.getTimeline(lastDate,limit);
-                for(PodcastAndEpisode podcastAndEpisode : podcastAndEpisodes){
-                    TimelineItem timelineItem = new TimelineItem(podcastAndEpisode);
-                    timelineItems.add(timelineItem);
-                    //if(((MainActivity)getContext()).showAds && timelineItems.size()%5 == 0){
-                        //timelineItems.add(timelineItemAd);
-                    //}
-                }
-                return null;
-            }
 
-            @Override
-            protected void onPostExecute(Object o) {
-                itemAdapter.add(timelineItems);
-                if(timelineItems.size() == 0){
-                    loadMoreItemItemAdapter.add(new FooterItem("Find new podcasts"));
-                }else {
-                    loadMoreItemItemAdapter.add(new FooterItem("Load more"));
-                }
-                if(swipeRefreshLayout.isRefreshing() && delay == 0){
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-            }
-        };
-        asyncTask.execute();
+        DatabaseManager databaseManager = new DatabaseManager(getContext());
+        ArrayList<PodcastAndEpisode> podcastAndEpisodes = databaseManager.getTimeline(lastDate,limit);
+        for(PodcastAndEpisode podcastAndEpisode : podcastAndEpisodes){
+            TimelineItem timelineItem = new TimelineItem(podcastAndEpisode);
+            itemAdapter.add(timelineItem);
+        }
+
+        if(podcastAndEpisodes.size() == 0){
+            loadMoreItemItemAdapter.add(new FooterItem("Find new podcasts"));
+        }else {
+            loadMoreItemItemAdapter.add(new FooterItem("Load more"));
+        }
+        if(swipeRefreshLayout.isRefreshing() && delay == 0){
+            swipeRefreshLayout.setRefreshing(false);
+        }
+
+
         new Handler().postDelayed(() -> {
             recyclerView.setVisibility(View.VISIBLE);
             if(swipeRefreshLayout.isRefreshing()){

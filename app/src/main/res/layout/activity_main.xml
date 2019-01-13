@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
+    android:background="?attr/backgroundColor"
     tools:context="com.wslclds.castn.activities.MainActivity"
     sothree:umanoPanelHeight="65dp"
     sothree:umanoShadowHeight="0dp">

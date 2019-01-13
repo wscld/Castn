@@ -1,6 +1,7 @@
 package com.wslclds.castn.activities;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
@@ -192,7 +193,7 @@ public class MainActivity extends SupportActivity{
                 .setTag(FIND_EPISODES_SERVICE_TAG)
                 .setRecurring(true)
                 .setLifetime(Lifetime.FOREVER)
-                .setTrigger(Trigger.executionWindow((int)TimeUnit.HOURS.toSeconds(4), (int)TimeUnit.HOURS.toSeconds(4)+(int)TimeUnit.MINUTES.toSeconds(10)))
+                .setTrigger(Trigger.executionWindow((int)TimeUnit.HOURS.toSeconds(3), (int)TimeUnit.HOURS.toSeconds(3)+(int)TimeUnit.MINUTES.toSeconds(10)))
                 .setReplaceCurrent(false)
                 .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
                 .build();

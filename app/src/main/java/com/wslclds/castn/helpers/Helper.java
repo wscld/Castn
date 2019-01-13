@@ -61,6 +61,7 @@ public class Helper {
         }
     }
 
+
     private void startDownload(Episode episode){
         DatabaseManager databaseManager = new DatabaseManager(context);
         if(databaseManager.addDownloadToQueue(episode)) {

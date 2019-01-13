@@ -88,10 +88,10 @@ public class Parser {
         return episodes;
     }
 
-    public ArrayList<Episode> parseEpisodesUntil(String url, long date){
+    public ArrayList<Episode> parseEpisodesUntil(String url, long date, long cacheTime){
         ArrayList<Episode> episodes = new ArrayList<>();
 
-        Document doc = Jsoup.parse(new DataGetter(context).getFeed(url));
+        Document doc = Jsoup.parse(new DataGetter(context).getFeed(url,cacheTime));
         Element podcastChanel = doc.select("channel").first();
         final Elements items = doc.select("item");
         ElementsGetter podcastElementsGetter = new ElementsGetter(podcastChanel);

@@ -24,6 +24,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,29 +94,17 @@ public class SubscriptionsFragment extends SupportFragment {
     }
 
     private void loadSubscriptions(){
-        swipeRefreshLayout.setRefreshing(true);
-        itemAdapter.clear();
-        @SuppressLint("StaticFieldLeak") AsyncTask asyncTask = new AsyncTask() {
-            ArrayList<Podcast> podcasts;
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                DatabaseManager databaseManager = new DatabaseManager(getContext());
-                podcasts = databaseManager.getPodcasts();
-                return null;
-            }
 
-            @Override
-            protected void onPostExecute(Object o) {
-                for(Podcast podcast : podcasts){
-                    if(podcast != null){
-                        SubscriptionItem subscriptionItem = new SubscriptionItem(podcast);
-                        itemAdapter.add(subscriptionItem);
-                    }
-                }
-                swipeRefreshLayout.setRefreshing(false);
+        DatabaseManager databaseManager = new DatabaseManager(getContext());
+        List<Podcast> podcasts = databaseManager.getPodcasts();
+
+        for(Podcast podcast : podcasts){
+            if(podcast != null){
+                SubscriptionItem subscriptionItem = new SubscriptionItem(podcast);
+                itemAdapter.add(subscriptionItem);
             }
-        };
-        asyncTask.execute();
+        }
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

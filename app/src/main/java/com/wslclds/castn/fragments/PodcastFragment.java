@@ -15,6 +15,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -402,7 +403,7 @@ public class PodcastFragment extends SupportFragment {
                 DatabaseManager databaseManager = new DatabaseManager(getContext());
                 Episode latestEpisode = databaseManager.getLatestStoredEpisode(currentUrl);
                 if(latestEpisode != null){
-                    episodes.addAll(0,new Parser(getContext()).parseEpisodesUntil(currentUrl,latestEpisode.getPubDate()));
+                    episodes.addAll(0,new Parser(getContext()).parseEpisodesUntil(currentUrl,latestEpisode.getPubDate(),10*DateUtils.MINUTE_IN_MILLIS));
                 }
                 newEpisodes = new ArrayList<>();
 

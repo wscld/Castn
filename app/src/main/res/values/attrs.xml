@@ -2,4 +2,5 @@
 <resources>
     <attr name="cardColor" format="reference" />
     <attr name="inverseColorPrimary" format="reference" />
+    <attr name="backgroundColor" format="reference" />
 </resources>

@@ -213,7 +213,7 @@ public class SearchFragment extends SupportFragment {
                 }
             }
         };
-        asyncTask.execute();
+        asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public void scrollTop(){

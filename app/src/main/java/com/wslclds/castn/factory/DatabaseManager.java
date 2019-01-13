@@ -30,8 +30,7 @@ import io.realm.RealmResults;
 import io.realm.Sort;
 
 public class DatabaseManager {
-    Context context;
-    boolean realmClosed;
+    private Context context;
 
     private RealmConfiguration realmConfig() {
         RealmConfiguration config = new RealmConfiguration.Builder()
@@ -308,18 +307,11 @@ public class DatabaseManager {
         return color;
     }
 
-    public ArrayList<Podcast> getPodcasts(){
+    public List<Podcast> getPodcasts(){
         Realm realm = getRealmInstance();
         realm.refresh();
         RealmResults<Podcast> podcastsRealm = realm.where(Podcast.class).findAll().sort("pubDate",Sort.DESCENDING);
-        ArrayList<Podcast> podcasts = new ArrayList<>();
-        for(Podcast podcast : podcastsRealm){
-            if(podcast != null){
-                podcasts.add(realm.copyFromRealm(podcast));
-            }
-        }
-        realm.close();
-        return podcasts;
+        return realm.copyFromRealm(podcastsRealm);
     }
 
     public void updatePodcastPubDate(String url){
@@ -619,16 +611,17 @@ public class DatabaseManager {
 
         int count = 0;
         ArrayList<PodcastAndEpisode> podcastAndEpisodes = new ArrayList();
-        RealmResults<Episode> episodes = realm.where(Episode.class).lessThan("pubDate",lastDate).sort("pubDate",Sort.DESCENDING).findAll();
+        List<Episode> episodes = realm.copyFromRealm(realm.where(Episode.class).lessThan("pubDate",lastDate).sort("pubDate",Sort.DESCENDING).findAll());
         if(episodes != null){
             for(Episode episode : episodes){
                 if(count <= limit){
                     if(episode != null) {
-                        Podcast podcast = getPodcast(episode.getUrl());
-                        if (podcast != null) {
+                        Podcast podcastRealm = realm.where(Podcast.class).contains("url",episode.getUrl()).findFirst();
+                        if (podcastRealm != null) {
+                            Podcast podcast = realm.copyFromRealm(podcastRealm);
                             PodcastAndEpisode podcastAndEpisode = new PodcastAndEpisode();
                             podcastAndEpisode.setPodcast(podcast);
-                            podcastAndEpisode.setEpisode(realm.copyFromRealm(episode));
+                            podcastAndEpisode.setEpisode(episode);
                             podcastAndEpisodes.add(podcastAndEpisode);
                         }
                     }

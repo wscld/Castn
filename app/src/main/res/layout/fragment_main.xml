@@ -8,6 +8,7 @@
 
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:layout_alignParentBottom="true"
+        app:bnbElevation="10dp"
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

@@ -94,7 +94,7 @@ public class LicensesFragment extends SupportFragment {
                         alertBuilder.updateDescription(licenseBody);
                     }
                 };
-                asyncTask.execute();
+                asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 return true;
             }
         });
@@ -155,7 +155,7 @@ public class LicensesFragment extends SupportFragment {
                 }
             }
         };
-        asyncTask.execute();
+        asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override

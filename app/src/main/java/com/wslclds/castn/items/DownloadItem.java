@@ -120,7 +120,7 @@ public class DownloadItem extends AbstractItem<DownloadItem, DownloadItem.ViewHo
                     description.setText(descriptionText);
                 }
             };
-            asyncTask.execute();
+            asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
         @Override

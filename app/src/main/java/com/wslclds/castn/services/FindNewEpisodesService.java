@@ -22,6 +22,7 @@ import com.firebase.jobdispatcher.JobService;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.wslclds.castn.GlideApp;
 import com.wslclds.castn.R;
@@ -44,6 +45,7 @@ public class FindNewEpisodesService extends JobService {
         isWorking = true;
         Realm.init(this);
 
+
         @SuppressLint("StaticFieldLeak") AsyncTask asyncTask = new AsyncTask() {
             int newEpisodes = 0;
             Podcast lastPodcast;
@@ -54,16 +56,15 @@ public class FindNewEpisodesService extends JobService {
                 Helper helper = new Helper(FindNewEpisodesService.this);
                 Parser parser = new Parser(FindNewEpisodesService.this);
 
-                ArrayList<Podcast> podcasts = databaseManager.getPodcasts();
+                List<Podcast> podcasts = databaseManager.getPodcasts();
                 for(Podcast podcast : podcasts){
                     if(podcast != null){
                         long latestPubDate = databaseManager.getLatestPubDate(podcast.getUrl());
                             if(latestPubDate != 0){ // if has episodes cached find only new episodes
 
-
                                 if(new Date().getTime()-latestPubDate < DateUtils.YEAR_IN_MILLIS) { //skip inactive podcasts
                                     if (new Date().getTime() - latestPubDate > (6*DateUtils.HOUR_IN_MILLIS)) {
-                                        ArrayList<Episode> episodes = parser.parseEpisodesUntil(podcast.getUrl(), latestPubDate);
+                                        ArrayList<Episode> episodes = parser.parseEpisodesUntil(podcast.getUrl(), latestPubDate,  6*DateUtils.HOUR_IN_MILLIS);
                                         newEpisodes += episodes.size();
                                         if (episodes.size() > 0) {
                                             databaseManager.storeEpisodes(episodes);
@@ -71,7 +72,9 @@ public class FindNewEpisodesService extends JobService {
                                         }
 
                                         if (helper.isAutomaticDownload()) {
-                                            helper.makeNetworkSafeDownload(episodes);
+                                            for(Episode episode : episodes) {
+                                                databaseManager.addDownloadToQueue(episode);
+                                            }
                                         }
 
                                         databaseManager.updatePodcastPubDate(podcast.getUrl());
@@ -102,7 +105,7 @@ public class FindNewEpisodesService extends JobService {
                 jobFinished(job,false);
             }
         };
-        asyncTask.execute();
+        asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         return isWorking; // Answers the question: "Is there still work going on?"
     }

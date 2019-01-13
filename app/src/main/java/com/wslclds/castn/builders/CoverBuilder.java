@@ -59,7 +59,7 @@ public class CoverBuilder {
                             checkBitmaps(bitmaps, finalImages);
                         }
                     };
-                    asyncTask.execute();
+                    asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
 
                 @Override
@@ -77,7 +77,7 @@ public class CoverBuilder {
                             checkBitmaps(bitmaps, finalImages);
                         }
                     };
-                    asyncTask.execute();
+                    asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             });
         }
@@ -98,7 +98,7 @@ public class CoverBuilder {
                     onLoad.onImageLoaded(bitmap);
                 }
             };
-            asyncTask.execute();
+            asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 

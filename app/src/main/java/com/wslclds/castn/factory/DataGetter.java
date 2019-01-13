@@ -53,6 +53,36 @@ public class DataGetter {
         return feed;
     }
 
+    public String getFeed(String url, long cacheTime){
+        String feed = "";
+        Document doc;
+        DatabaseManager databaseManager = new DatabaseManager(context);
+
+        Feed feedObject = databaseManager.getCachedFeed(url);
+
+        if(feedObject == null){
+            try {
+                doc = Jsoup.connect(url).userAgent("Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.4 Safari/537.36").ignoreContentType(true).timeout(THREE_SECONDS).get();
+                feed = doc.toString();
+                databaseManager.cacheFeed(url,feed);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else  if(feedObject != null && feedObject.getDate() > 0 && new Date().getTime() - feedObject.getDate() > cacheTime){
+            try {
+                doc = Jsoup.connect(url).userAgent("Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.4 Safari/537.36").ignoreContentType(true).timeout(THREE_SECONDS).get();
+                feed = doc.toString();
+                databaseManager.cacheFeed(url,feed);
+            } catch (IOException e) {
+                e.printStackTrace();
+                feed = feedObject.getFeed();
+            }
+        }else {
+            feed = feedObject.getFeed();
+        }
+        return feed;
+    }
+
     public String getJson(String url){
         String feed = "";
         DatabaseManager databaseManager = new DatabaseManager(context);
