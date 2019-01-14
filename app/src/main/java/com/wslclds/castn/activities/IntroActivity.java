@@ -27,6 +27,14 @@ public class IntroActivity extends AppIntro {
         themeHelper.apply(true);
         setBarColor(getResources().getColor(R.color.colorPrimaryDark));
 
+        SlideFragment slideFragment0 = SlideFragment.newInstance(
+                "Welcome!",
+                "Castn is still in beta, please feel free to send your feedback under settings > feedback",
+                "cmd_beta",
+                getResources().getColor(R.color.colorPrimary),
+                Color.DKGRAY
+        );
+        addSlide(slideFragment0);
 
         SlideFragment slideFragment1 = SlideFragment.newInstance(
                 "Timeline",

@@ -2,8 +2,10 @@ package com.wslclds.castn.fragments;
 
 
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -87,6 +89,9 @@ public class SettingsFragment extends SupportFragment {
         MenuItem i4 = new MenuItem("Licenses",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_format_list_bulleted).color(Color.WHITE).paddingDp(9));
         itemAdapter.add(i4);
 
+        MenuItem i5 = new MenuItem("Feedback",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_message_draw).color(Color.WHITE).paddingDp(9));
+        itemAdapter.add(i5);
+
 
         fastAdapter.withOnClickListener(new OnClickListener() {
             @Override
@@ -125,7 +130,9 @@ public class SettingsFragment extends SupportFragment {
                 }else if(position == 3){
                     start(LicensesFragment.newInstance());
                 }else if(position == 4){
-                    start(AboutFragment.newInstance());
+                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                    CustomTabsIntent customTabsIntent = builder.build();
+                    customTabsIntent.launchUrl(getContext(), Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSeo5IvSkT5hB14aSHin6dnJ5YhDLUxqH-fY7VRpKAD3J0O-tg/viewform?usp=sf_link"));
                 }
 
                 return true;
