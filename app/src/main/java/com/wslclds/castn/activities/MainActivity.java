@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -143,6 +144,7 @@ public class MainActivity extends SupportActivity{
 
         setSupportActionBar(toolbar);
 
+        checkFirstRun();
 
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
@@ -177,6 +179,14 @@ public class MainActivity extends SupportActivity{
         loadView();
     }
 
+    private void checkFirstRun(){
+        SharedPreferences prefs = getSharedPreferences("com.wslclds.castn", MODE_PRIVATE);
+        if (prefs.getBoolean("firstrun", true)) {
+            Intent intent = new Intent(this,IntroActivity.class);
+            startActivity(intent);
+            prefs.edit().putBoolean("firstrun", false).commit();
+        }
+    }
 
 
     public void loadView(){

@@ -93,6 +93,8 @@ dependencies {
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     //AndPermission  https://github.com/yanzhenjie/AndPermission
     implementation 'com.yanzhenjie:permission:2.0.0-rc12'
+    //app intro  https://github.com/paolorotolo/AppIntro
+    implementation 'com.github.apl-devs:appintro:v4.2.3'
     //android-icons https://github.com/mikepenz/Android-Iconics
     implementation "com.mikepenz:iconics-core:3.0.4@aar"
     implementation 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar'

@@ -128,6 +128,7 @@ public class LicensesFragment extends SupportFragment {
                         "https://github.com/rengwuxian/MaterialEditText",
                         "https://github.com/MiguelCatalan/MaterialSearchView",
                         "https://github.com/yanzhenjie/AndPermission",
+                        "https://github.com/paolorotolo/AppIntro",
                         "https://github.com/mikepenz/Android-Iconics"
                 };
 
