@@ -5,7 +5,7 @@
     <color name="colorPrimaryDark">#c7c7c7</color>
     <color name="colorPrimaryDarkDarker">#a4a4a4</color>
     <color name="colorAccent">#F44336</color>
-    <color name="lightCardColor">#fdfdfd</color>
+    <color name="lightCardColor">#fff</color>
     <color name="lightInverseColorPrimary">#000</color>
     <!-- dark theme -->
     <color name="darkThemeColorPrimary">#404552</color>
