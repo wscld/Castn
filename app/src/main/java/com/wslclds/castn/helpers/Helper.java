@@ -148,10 +148,17 @@ public class Helper {
     }
 
     public static String urlToId(String url){
+        try{
+            if(url.substring(url.length() - 1).equals("/")){
+                url = url.substring(0, url.length() - 1);
+            }
+        }catch (Exception e){ }
+
         return url.replace("http://","")
                 .replace("https://","")
                 .replace("www.","")
-                .replace("=","")
+                .replace("=",".")
+                .replace("&",".")
                 .replace("?",".")
                 .replace("/",".");
     }

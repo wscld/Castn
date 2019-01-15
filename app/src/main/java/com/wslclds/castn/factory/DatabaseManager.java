@@ -210,6 +210,19 @@ public class DatabaseManager {
         return null;
     }
 
+    public Podcast getPodcastWithId(String id){
+        Realm realm = getRealmInstance();
+
+        Podcast podcastRealm = realm.where(Podcast.class).contains("id",id).findFirst();
+        if(podcastRealm != null){
+            podcastRealm = realm.copyFromRealm(podcastRealm);
+            realm.close();
+            return podcastRealm;
+        }
+        realm.close();
+        return null;
+    }
+
     public void storePodcasts(ArrayList<Podcast> podcasts, DatabaseUpdateListener databaseUpdateListener){
         if(podcasts.size() > 0 && podcasts.get(0) != null){
             Realm realm = getRealmInstance();

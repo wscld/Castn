@@ -68,7 +68,7 @@ public class AboutFragment extends SupportFragment {
         website.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url = "http://castn.wslclds.com";
+                String url = "http://wslclds.com/castn";
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                 CustomTabsIntent customTabsIntent = builder.build();
                 customTabsIntent.launchUrl(getContext(), Uri.parse(url));
