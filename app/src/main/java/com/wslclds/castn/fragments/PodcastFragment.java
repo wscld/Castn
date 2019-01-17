@@ -48,6 +48,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.wslclds.castn.activities.EpisodeDetailActivity;
 import com.wslclds.castn.activities.MainActivity;
+import com.wslclds.castn.activities.PodcastDetailActivity;
 import com.wslclds.castn.factory.DatabaseManager;
 import com.wslclds.castn.helpers.Helper;
 import com.wslclds.castn.factory.objects.Episode;
@@ -59,6 +60,8 @@ import com.wslclds.castn.GlideApp;
 import com.wslclds.castn.items.EpisodeItem;
 import com.wslclds.castn.items.FooterItem;
 import com.wslclds.castn.R;
+import com.wslclds.castn.items.TimelineItem;
+
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -500,6 +503,16 @@ public class PodcastFragment extends SupportFragment {
                 @Override
                 protected void onPostExecute(Object o) {
                     description.setText(podcastDescription);
+                    description.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(podcast != null){
+                                Intent intent = new Intent(getContext(),PodcastDetailActivity.class);
+                                intent.putExtra("podcast",new Gson().toJson(podcast));
+                                startActivity(intent);
+                            }
+                        }
+                    });
                     if(getContext() != null && color != 0){
                         themeColor = darker;
                         topLayout.setBackgroundColor(darker);

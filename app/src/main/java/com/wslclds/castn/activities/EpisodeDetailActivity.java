@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -121,13 +122,6 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
 
                 title.setText(episode.getTitle());
                 fullTitle.setText(episode.getTitle());
-                URLImageParser URLImageParser = new URLImageParser(EpisodeDetailActivity.this,fullDescription);
-                fullDescription.setTransformationMethod(new LinkTransformationMethod(Linkify.WEB_URLS | Linkify.EMAIL_ADDRESSES | Linkify.PHONE_NUMBERS));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    fullDescription.setText(Html.fromHtml(episode.getDescription(),Html.FROM_HTML_MODE_COMPACT, URLImageParser,null));
-                }else {
-                    fullDescription.setText(Html.fromHtml(episode.getDescription()));
-                }
 
                 if(status == Helper.STATE_DOWNLOADED){
                     statusBadge.setText("DOWNLOADED");
@@ -138,11 +132,11 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
                     setDownloadEnabled(true);
                 }
 
-                date.setText(DateUtils.getRelativeTimeSpanString(episode.getPubDate(),new Date().getTime(),DateUtils.MINUTE_IN_MILLIS).toString());
+                //date.setText(DateUtils.getRelativeTimeSpanString(episode.getPubDate(),new Date().getTime(),DateUtils.MINUTE_IN_MILLIS).toString());
                 duration.setText(episode.getDuration());
 
                 if(color != 0){
-                    GlideApp.with(EpisodeDetailActivity.this).load(episode.getImage()).centerCrop().into(image);
+                    GlideApp.with(EpisodeDetailActivity.this).load(episode.getImage()).override(200,200).centerCrop().into(image);
                     episodeCard.setCardBackgroundColor(Helper.darker(color,0.7f));
                     if(justDescription){
                         mainCard.setBackgroundColor(Helper.darker(color,0.6f));
@@ -151,7 +145,7 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
                     GlideApp.with(EpisodeDetailActivity.this).asBitmap().load(episode.getImage()).override(200,200).into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            GlideApp.with(EpisodeDetailActivity.this).load(resource).centerCrop().into(image);
+                            GlideApp.with(EpisodeDetailActivity.this).load(resource).override(200,200).centerCrop().into(image);
                             Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
                                 @Override
                                 public void onGenerated(@NonNull Palette palette) {
@@ -165,7 +159,7 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
                         }
                     });
                 }
-                GlideApp.with(EpisodeDetailActivity.this).load(episode.getImage()).into(fullImage);
+                GlideApp.with(EpisodeDetailActivity.this).load(episode.getImage()).override(400,400).into(fullImage);
 
                 play.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -226,6 +220,7 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
                         }
                     }
                 });
+                loadDescription();
             }
         };
         asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -236,6 +231,16 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
             episodeCard.setVisibility(View.GONE);
             fullDescription.setTextColor(Color.WHITE);
             fullTitle.setTextColor(Color.WHITE);
+        }
+    }
+
+    private void loadDescription(){
+        URLImageParser URLImageParser = new URLImageParser(EpisodeDetailActivity.this,fullDescription);
+        fullDescription.setTransformationMethod(new LinkTransformationMethod(Linkify.WEB_URLS | Linkify.EMAIL_ADDRESSES | Linkify.PHONE_NUMBERS));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            fullDescription.setText(Html.fromHtml(episode.getDescription(),Html.FROM_HTML_MODE_COMPACT, URLImageParser,null));
+        }else {
+            fullDescription.setText(Html.fromHtml(episode.getDescription()));
         }
     }
 

@@ -3,6 +3,8 @@ package com.wslclds.castn.builders;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.InputType;
+import android.widget.EditText;
 
 public class AlertBuilder {
     AlertDialog alertDialog;
@@ -15,6 +17,22 @@ public class AlertBuilder {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                    }
+                });
+    }
+
+    public AlertBuilder(Context context, String title, String description, onButtonClick3 onButtonClick3){
+        EditText edittext = new EditText(context);
+        edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        alertDialog = new AlertDialog.Builder(context).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(description);
+        alertDialog.setView(edittext);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        onButtonClick3.onConfirm(Long.valueOf(edittext.getText().toString()));
                     }
                 });
     }
@@ -67,5 +85,9 @@ public class AlertBuilder {
     public interface onButtonClick2{
         void onConfirm();
         void onCancel();
+    }
+
+    public interface onButtonClick3{
+        void onConfirm(long l);
     }
 }

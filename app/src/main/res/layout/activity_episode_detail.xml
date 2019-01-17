@@ -46,7 +46,7 @@
                                 android:layout_margin="10dp"
                                 app:cardElevation="5dp"
                                 app:cardCornerRadius="10dp"
-                                app:cardBackgroundColor="@color/colorPrimary"
+                                app:cardBackgroundColor="@color/colorAccent"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                                 <LinearLayout
@@ -115,6 +115,7 @@
                                                 android:layout_height="wrap_content" />
                                         </LinearLayout>
                                         <TextView
+                                            android:visibility="gone"
                                             android:textColor="@color/white"
                                             android:id="@+id/date"
                                             android:singleLine="true"
@@ -173,14 +174,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <TextView
-                                android:text="description"
+                                tools:text="description"
                                 android:id="@+id/fullTitle"
                                 android:textSize="18sp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
                             <TextView
-                                android:text="description"
+                                tools:text="loading"
                                 android:id="@+id/fullDescription"
                                 android:textSize="14sp"
                                 android:layout_width="match_parent"

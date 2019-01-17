@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.liuguangqiang.swipeback.SwipeBackLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeBackLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    tools:context="com.wslclds.castn.activities.SleepTimerActivity">
+    <LinearLayout
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:paddingTop="200dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:background="@color/transparentDark"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                <android.support.v7.widget.CardView
+                    android:id="@+id/mainCard"
+                    app:cardBackgroundColor="?attr/cardColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="20dp"
+                    android:clipToPadding="false"
+                    android:clipChildren="false">
+                    <LinearLayout
+                        android:layout_margin="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        </LinearLayout>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:padding="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <android.support.v7.widget.CardView
+                                app:cardBackgroundColor="@color/transparentDark"
+                                app:cardCornerRadius="10dp"
+                                app:cardElevation="0dp"
+                                android:layout_marginBottom="40dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp">
+                                <LinearLayout
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+                                    <ImageView
+                                        android:id="@+id/icon"
+                                        android:src="@drawable/ic_search_black_24dp"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp" />
+                                    <TextView
+                                        tools:text="1 minute left"
+                                        android:layout_marginLeft="10dp"
+                                        android:id="@+id/currentTime"
+                                        android:textSize="18sp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />
+                                </LinearLayout>
+                            </android.support.v7.widget.CardView>
+                            <Button
+                                android:id="@+id/setTime"
+                                android:text="set minutes"
+                                android:padding="30dp"
+
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                            <Button
+                                android:id="@+id/cancel"
+                                android:text="remove"
+                                android:backgroundTint="@color/colorAccent"
+                                android:padding="30dp"
+                                android:textColor="@color/white"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</com.liuguangqiang.swipeback.SwipeBackLayout>

@@ -1,4 +1,5 @@
 package com.wslclds.castn.services;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -32,6 +33,7 @@ import com.bumptech.glide.request.transition.Transition;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.wslclds.castn.activities.MainActivity;
 import com.wslclds.castn.factory.DatabaseManager;
@@ -61,6 +63,8 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
     private String playlistId;
     private boolean loading;
     DatabaseManager databaseManager;
+    AlarmManager alarmManager;
+    long alarmManagerTime;
 
     private static final String CHANNEL_ID = "media_playback_channel_1";
     private static final String MEDIA_SESSION_TAG = "AudioPlayerService";
@@ -108,6 +112,7 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
         killMediaPlayer();
         unregisterBecomingNoisyReceiver();
         unregisterHeadsetPlugUnplugReceiver();
+        removeTimer();
         episodes = null;
         super.onDestroy();
     }
@@ -144,6 +149,8 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
         this.index = 0;
         if(episodes != null && episodes.size() > 0){
             initMediaPlayer();
+        }else {
+            stop();
         }
     }
 
@@ -353,6 +360,28 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
 
     public boolean isLoading() {
         return loading;
+    }
+
+    public long getSleepTime(){
+        return alarmManagerTime;
+    }
+
+    public void removeTimer(){
+        if(alarmManager != null){
+            alarmManagerTime = 0;
+            Intent i = new Intent(this,PlayerKillerService.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this,0,i,0);
+            alarmManager.cancel(pendingIntent);
+        }
+    }
+
+    public void setSleep(long time){
+        alarmManagerTime = new Date().getTime()+time;
+        Intent i = new Intent(this,PlayerKillerService.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,0,i,0);
+        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, alarmManagerTime, pendingIntent);
     }
 
     public void playPause(){

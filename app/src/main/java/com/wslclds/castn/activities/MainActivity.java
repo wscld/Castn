@@ -1,5 +1,7 @@
 package com.wslclds.castn.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -54,6 +56,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import com.wslclds.castn.builders.AlertBuilder;
@@ -75,11 +78,14 @@ import com.wslclds.castn.builders.PopUpMenuBuilder;
 import com.wslclds.castn.R;
 import com.wslclds.castn.services.AudioPlayerService;
 import com.wslclds.castn.services.FindNewEpisodesService;
+import com.wslclds.castn.services.PlayerKillerService;
 
 import io.realm.Realm;
 import me.yokeyword.fragmentation.SupportActivity;
 
 public class MainActivity extends SupportActivity{
+
+    private static int SLEEP_TIMER_CODE = 3;
 
     private Uri appLinkData;
     public static String FIND_EPISODES_SERVICE_TAG = "episode_finder";
@@ -122,6 +128,8 @@ public class MainActivity extends SupportActivity{
     ImageButton fullPlayPause;
     @BindView(R.id.fullSpeed)
     ImageButton fullSpeed;
+    @BindView(R.id.sleepButton)
+    ImageButton sleepButton;
     @BindView(R.id.time1)
     TextView time1;
     @BindView(R.id.time2)
@@ -306,6 +314,21 @@ public class MainActivity extends SupportActivity{
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == SLEEP_TIMER_CODE){
+            if(isBound && data != null){
+                long time = data.getLongExtra("result",0);
+                if(time != 0 && time != 1) {
+                    audioPlayerService.setSleep(time);
+                }else if (time == 1){
+                    audioPlayerService.removeTimer();
+                }
+            }
+        }
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         handleIntent(intent);
@@ -381,6 +404,7 @@ public class MainActivity extends SupportActivity{
         fullBackTime.setImageDrawable(new IconicsDrawable(this,GoogleMaterial.Icon.gmd_replay_30));
         fullPlaylist.setImageDrawable(new IconicsDrawable(this,GoogleMaterial.Icon.gmd_playlist_play));
         fullSpeed.setImageDrawable(new IconicsDrawable(this,CommunityMaterial.Icon.cmd_clock_fast));
+        sleepButton.setImageDrawable(new IconicsDrawable(this,CommunityMaterial.Icon.cmd_sleep));
 
         if(audioPlayerService != null){
             updateEpisodeDetails(audioPlayerService.getCurrentEpisode());
@@ -415,6 +439,15 @@ public class MainActivity extends SupportActivity{
             }
         });
 
+        sleepButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,SleepTimerActivity.class);
+                intent.putExtra("time",audioPlayerService.getSleepTime());
+                startActivityForResult(intent,SLEEP_TIMER_CODE);
+            }
+        });
+
         fullPlayPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -425,6 +458,17 @@ public class MainActivity extends SupportActivity{
         });
 
         fullDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //fullDescription.toggle();
+                Intent intent = new Intent(MainActivity.this,EpisodeDetailActivity.class);
+                intent.putExtra("episode",new Gson().toJson(audioPlayerService.getCurrentEpisode()));
+                intent.putExtra("justDescription", true);
+                startActivity(intent);
+            }
+        });
+
+        fullTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //fullDescription.toggle();
