@@ -165,8 +165,12 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mediaPlayer) {
+                    long storedTime = databaseManager.getElapsedTimeFor(currentEpisode.getEnclosureUrl());
+
                     play();
-                    mediaPlayer.seekTo((int) databaseManager.getElapsedTimeFor(currentEpisode.getEnclosureUrl()));
+                    if(storedTime+10000 < mediaPlayer.getDuration()) {
+                        mediaPlayer.seekTo((int) storedTime);
+                    }
                     onChange.onPlayingStateChanged(isPlaying());
                     loading = false;
                 }
@@ -415,7 +419,7 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
     }
 
     public Episode getCurrentEpisode(){
-        if(episodes != null){
+        if(episodes != null && episodes.size() > 0){
             return episodes.get(index);
         }
         return null;

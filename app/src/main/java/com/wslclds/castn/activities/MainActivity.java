@@ -41,6 +41,7 @@ import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.RetryStrategy;
 import com.firebase.jobdispatcher.Trigger;
+import com.google.gson.Gson;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -335,7 +336,11 @@ public class MainActivity extends SupportActivity{
     //player binding
     private void makeBind(){
         Intent intent = new Intent(this , AudioPlayerService.class);
-        startService(intent);
+        try {
+            startService(intent);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         bindService(intent , boundServiceConnection,BIND_AUTO_CREATE);
     }
     private void removeBind(){
@@ -422,7 +427,11 @@ public class MainActivity extends SupportActivity{
         fullDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fullDescription.toggle();
+                //fullDescription.toggle();
+                Intent intent = new Intent(MainActivity.this,EpisodeDetailActivity.class);
+                intent.putExtra("episode",new Gson().toJson(audioPlayerService.getCurrentEpisode()));
+                intent.putExtra("justDescription", true);
+                startActivity(intent);
             }
         });
 

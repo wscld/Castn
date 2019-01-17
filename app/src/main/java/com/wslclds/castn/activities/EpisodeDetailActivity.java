@@ -2,6 +2,7 @@ package com.wslclds.castn.activities;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -49,6 +50,7 @@ import com.wslclds.castn.R;
 
 public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener {
 
+    boolean justDescription;
     Episode episode;
     String playlistId;
     DatabaseManager databaseManager;
@@ -74,6 +76,8 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
     ImageButton play;
     @BindView(R.id.episodeCard)
     CardView episodeCard;
+    @BindView(R.id.mainCard)
+    CardView mainCard;
     @BindView(R.id.swipeBackLayout)
     SwipeBackLayout swipeBackLayout;
     @BindView(R.id.addToPlaylist)
@@ -90,6 +94,7 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
         ButterKnife.bind(this);
         setDragEdge(SwipeBackLayout.DragEdge.TOP);
         playlistId = getIntent().getStringExtra("playlistId");
+        justDescription = getIntent().getBooleanExtra("justDescription",false);
 
         databaseManager = new DatabaseManager(this);
 
@@ -102,6 +107,10 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
             @Override
             protected Object doInBackground(Object[] objects) {
                 episode = new Gson().fromJson(getIntent().getStringExtra("episode"),Episode.class);
+                Episode tempEp = databaseManager.getEpisode(episode.getEnclosureUrl());
+                if(tempEp != null){
+                    episode = tempEp;
+                }
                 return null;
             }
 
@@ -115,7 +124,7 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
                 URLImageParser URLImageParser = new URLImageParser(EpisodeDetailActivity.this,fullDescription);
                 fullDescription.setTransformationMethod(new LinkTransformationMethod(Linkify.WEB_URLS | Linkify.EMAIL_ADDRESSES | Linkify.PHONE_NUMBERS));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    fullDescription.setText(Html.fromHtml(episode.getDescription(),Html.FROM_HTML_MODE_LEGACY, URLImageParser,null));
+                    fullDescription.setText(Html.fromHtml(episode.getDescription(),Html.FROM_HTML_MODE_COMPACT, URLImageParser,null));
                 }else {
                     fullDescription.setText(Html.fromHtml(episode.getDescription()));
                 }
@@ -135,6 +144,9 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
                 if(color != 0){
                     GlideApp.with(EpisodeDetailActivity.this).load(episode.getImage()).centerCrop().into(image);
                     episodeCard.setCardBackgroundColor(Helper.darker(color,0.7f));
+                    if(justDescription){
+                        mainCard.setBackgroundColor(Helper.darker(color,0.6f));
+                    }
                 }else {
                     GlideApp.with(EpisodeDetailActivity.this).asBitmap().load(episode.getImage()).override(200,200).into(new SimpleTarget<Bitmap>() {
                         @Override
@@ -145,6 +157,9 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
                                 public void onGenerated(@NonNull Palette palette) {
                                     int color = palette.getDominantColor(getResources().getColor(R.color.colorPrimary));
                                     episodeCard.setCardBackgroundColor(Helper.darker(color,0.7f));
+                                    if(justDescription){
+                                        mainCard.setBackgroundColor(Helper.darker(color,0.6f));
+                                    }
                                 }
                             });
                         }
@@ -214,6 +229,14 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
             }
         };
         asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        if(justDescription){
+            addToPlaylist.setVisibility(View.GONE);
+            download.setVisibility(View.GONE);
+            episodeCard.setVisibility(View.GONE);
+            fullDescription.setTextColor(Color.WHITE);
+            fullTitle.setTextColor(Color.WHITE);
+        }
     }
 
     private PlaylistEpisode createPlaylistEpisodeObject(String playlistId){
