@@ -1,6 +1,9 @@
 package com.wslclds.castn.activities;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateUtils;
@@ -47,10 +50,15 @@ public class SleepTimerActivity extends AppCompatActivity implements SwipeBackLa
 
         icon.setImageDrawable(new IconicsDrawable(this,CommunityMaterial.Icon.cmd_sleep));
         icon.setColorFilter(themeHelper.getTextColor());
+
         if(time == 0){
             currentTime.setText("No sleep time set");
+            cancelButton.setEnabled(false);
+            cancelButton.setAlpha(0.4f);
         }else {
             currentTime.setText((DateUtils.getRelativeTimeSpanString(time,new Date().getTime(),DateUtils.MINUTE_IN_MILLIS)).toString());
+            cancelButton.setEnabled(true);
+            cancelButton.setAlpha(1.0f);
         }
 
         setTimeButton.setOnClickListener(new View.OnClickListener() {

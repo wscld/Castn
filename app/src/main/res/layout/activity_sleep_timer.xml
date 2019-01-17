@@ -33,7 +33,6 @@
                     android:clipToPadding="false"
                     android:clipChildren="false">
                     <LinearLayout
-                        android:layout_margin="10dp"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -45,14 +44,14 @@
                         </LinearLayout>
                         <LinearLayout
                             android:orientation="vertical"
-                            android:padding="15dp"
+                            android:padding="0dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <android.support.v7.widget.CardView
                                 app:cardBackgroundColor="@color/transparentDark"
                                 app:cardCornerRadius="10dp"
                                 app:cardElevation="0dp"
-                                android:layout_marginBottom="40dp"
+                                android:layout_margin="20dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp">
                                 <LinearLayout
@@ -75,22 +74,35 @@
                                         android:layout_height="wrap_content" />
                                 </LinearLayout>
                             </android.support.v7.widget.CardView>
-                            <Button
-                                android:id="@+id/setTime"
-                                android:text="set minutes"
-                                android:padding="30dp"
-
-                                android:background="?attr/selectableItemBackgroundBorderless"
+                            <LinearLayout
+                                android:background="@color/transparentDark"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-                            <Button
-                                android:id="@+id/cancel"
-                                android:text="remove"
-                                android:backgroundTint="@color/colorAccent"
-                                android:padding="30dp"
-                                android:textColor="@color/white"
+                                android:layout_height="wrap_content">
+                                <Button
+                                    android:id="@+id/setTime"
+                                    android:text="set minutes"
+                                    android:drawableLeft="@drawable/ic_timer_black_24dp"
+                                    android:drawableTint="?attr/inverseColorPrimary"
+                                    android:padding="30dp"
+                                    android:background="?attr/selectableItemBackgroundBorderless"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:background="@color/colorAccent"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content">
+                                <Button
+                                    android:id="@+id/cancel"
+                                    android:text="remove"
+                                    android:drawableLeft="@drawable/ic_delete"
+                                    android:drawableTint="@color/white"
+                                    android:background="?attr/selectableItemBackgroundBorderless"
+                                    android:padding="30dp"
+                                    android:textColor="@color/white"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
