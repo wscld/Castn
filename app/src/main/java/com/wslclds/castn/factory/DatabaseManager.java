@@ -521,6 +521,23 @@ public class DatabaseManager {
         return episodes;
     }
 
+    public ArrayList<Episode> getEpisodesAscending(String url){
+        Realm realm = getRealmInstance();
+        realm.refresh();
+
+        ArrayList<Episode> episodes = new ArrayList();
+        RealmResults<Episode> episodesRealm = realm.where(Episode.class).contains("url",url).sort("pubDate",Sort.ASCENDING).findAll();
+        if(episodesRealm != null){
+            for(Episode episode : episodesRealm){
+                if(episode != null){
+                    episodes.add(realm.copyFromRealm(episode));
+                }
+            }
+        }
+        realm.close();
+        return episodes;
+    }
+
     public List<Episode> getEpisodes(String url, int limit){
         Realm realm = getRealmInstance();
         realm.refresh();

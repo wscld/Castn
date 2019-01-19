@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="cardColor" format="reference" />
+    <attr name="cardColorDarker" format="reference" />
     <attr name="inverseColorPrimary" format="reference" />
     <attr name="backgroundColor" format="reference" />
 </resources>

@@ -302,7 +302,7 @@ public class PodcastFragment extends SupportFragment {
             protected void onPostExecute(Object o) {
                 loadPodcastData();
                 if(databaseManager.isSubscribed(currentUrl)){
-                    getEpisodesOffline();
+                    getEpisodesOffline(false,false,false);
                 }else {
                     getSomeEpisodes();
                 }
@@ -312,12 +312,39 @@ public class PodcastFragment extends SupportFragment {
     }
 
     @SuppressLint("StaticFieldLeak")
-    private void getEpisodesOffline(){
+    private void getEpisodesOffline(boolean onlyDownloaded, boolean onlyUnfinished, boolean reverse){
         getEpisodesOfflineTask = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] objects) {
                 DatabaseManager databaseManager = new DatabaseManager(getContext());
-                episodes = databaseManager.getEpisodes(currentUrl);
+                if(reverse){
+                    episodes = databaseManager.getEpisodesAscending(currentUrl);
+                }else {
+                    episodes = databaseManager.getEpisodes(currentUrl);
+                }
+                if(onlyDownloaded){
+                    ArrayList<Episode> tempEpisodes = new ArrayList<>();
+                    for(Episode episode : episodes){
+                        if(databaseManager.getDownloadStatus(episode.getEnclosureUrl()) == Helper.STATE_DOWNLOADED){
+                            tempEpisodes.add(episode);
+                        }
+                    }
+                    episodes.clear();
+                    episodes = tempEpisodes;
+                    tempEpisodes.clear();
+                }
+
+                if(onlyUnfinished){
+                    ArrayList<Episode> tempEpisodes = new ArrayList<>();
+                    for(Episode episode : episodes){
+                        if(!databaseManager.isEpisodeListened(episode.getEnclosureUrl())){
+                            tempEpisodes.add(episode);
+                        }
+                    }
+                    episodes.clear();
+                    episodes = tempEpisodes;
+                    tempEpisodes.clear();
+                }
                 return null;
             }
 

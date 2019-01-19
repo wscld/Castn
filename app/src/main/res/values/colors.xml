@@ -6,6 +6,7 @@
     <color name="colorPrimaryDarkDarker">#a4a4a4</color>
     <color name="colorAccent">#F44336</color>
     <color name="lightCardColor">#fff</color>
+    <color name="lightCardColorDarker">#eeeeee</color>
     <color name="lightInverseColorPrimary">#000</color>
     <!-- dark theme -->
     <color name="darkThemeColorPrimary">#404552</color>
@@ -13,7 +14,16 @@
     <color name="darkThemeColorPrimaryDarkDarker">#2b2d38</color>
     <color name="darkThemeColorAccent">#F44336</color>
     <color name="darkCardColor">#454a58</color>
+    <color name="darkCardColorDarker">#454a58</color>
     <color name="darkInverseColorPrimary">#FFF</color>
+    <!-- AMOLED theme -->
+    <color name="AMOLEDThemeColorPrimary">#212121</color>
+    <color name="AMOLEDThemeColorPrimaryDark">#131313</color>
+    <color name="AMOLEDThemeColorPrimaryDarkDarker">#000000</color>
+    <color name="AMOLEDThemeColorAccent">#F44336</color>
+    <color name="AMOLEDCardColor">#000000</color>
+    <color name="AMOLEDCardColorDarker">#000000</color>
+    <color name="AMOLEDInverseColorPrimary">#FFF</color>
     <!-- bottomnav light-->
     <color name="bottomNavDefault">#5d000000</color>
     <color name="bottomNavSelected">#af000000</color>
