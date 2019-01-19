@@ -29,6 +29,9 @@
 
 
     <style name="Popup" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/transparentDark</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -42,6 +45,9 @@
     </style>
 
     <style name="PopupDark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/darkThemeColorPrimary</item>
+        <item name="colorPrimaryDark">@color/darkThemeColorPrimaryDark</item>
+        <item name="colorAccent">@color/darkThemeColorAccent</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/transparentDark</item>
         <item name="android:windowContentOverlay">@null</item>
