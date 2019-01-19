@@ -82,8 +82,6 @@ public class MeFragment extends SupportFragment {
                     ((SupportFragment) getParentFragment()).start(EpisodeListFragment.newInstance(EpisodeListFragment.TYPE_UNFINISHED));
                 }else if(position == 3){
                     ((SupportFragment) getParentFragment()).start(SettingsFragment.newInstance());
-                }else if(position == 4){
-                    ((SupportFragment) getParentFragment()).start(AboutFragment.newInstance());
                 }
                 return true;
             }
@@ -107,8 +105,8 @@ public class MeFragment extends SupportFragment {
         MenuItem i4 = new MenuItem("Settings",new IconicsDrawable(getContext()).icon(CommunityMaterial.Icon.cmd_settings).color(Color.WHITE).paddingDp(9));
         itemAdapter.add(i4);
         //about
-        MenuItem i5 = new MenuItem("About",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_information_variant).color(Color.WHITE).paddingDp(9));
-        itemAdapter.add(i5);
+        //MenuItem i5 = new MenuItem("About",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_information_variant).color(Color.WHITE).paddingDp(9));
+        //itemAdapter.add(i5);
         //remove ads
         //MenuItem i5 = new MenuItem("Remove ads",new IconicsDrawable(getContext()).icon(CommunityMaterial.Icon.cmd_star).color(Color.WHITE).paddingDp(9));
         //itemAdapter.add(i5);

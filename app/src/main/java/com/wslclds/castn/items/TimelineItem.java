@@ -84,6 +84,8 @@ public class TimelineItem extends AbstractItem<TimelineItem,TimelineItem.ViewHol
         public LinearLayout episodeLayout;
         @BindView(R.id.mainCard)
         CardView mainCard;
+        @BindView(R.id.listenedIcon)
+        CardView listenedIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -100,9 +102,13 @@ public class TimelineItem extends AbstractItem<TimelineItem,TimelineItem.ViewHol
                 private String episodeDuration;
                 private String episodeDate;
                 String episodeDescription;
+                boolean listened;
 
                 @Override
                 protected Object doInBackground(Object[] objects) {
+                    DatabaseManager databaseManager = new DatabaseManager(itemView.getContext());
+
+                    listened = databaseManager.isEpisodeListened(episode.getEnclosureUrl());
                     episodeDescription = episode.getPlainDescription();
                     if(episodeDescription.length() > 400){
                         episodeDescription = episodeDescription.substring(0,400)+"...";
@@ -121,6 +127,11 @@ public class TimelineItem extends AbstractItem<TimelineItem,TimelineItem.ViewHol
                         description.setText(episodeDescription);
                     }else {
                         description.setVisibility(View.GONE);
+                    }
+                    if(listened){
+                        listenedIcon.setVisibility(View.VISIBLE);
+                    }else {
+                        listenedIcon.setVisibility(View.GONE);
                     }
                 }
             };

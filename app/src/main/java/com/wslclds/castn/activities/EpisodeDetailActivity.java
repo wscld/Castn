@@ -35,6 +35,7 @@ import java.util.UUID;
 import com.wslclds.castn.builders.AlertWithInputBuilder;
 import com.wslclds.castn.extensions.LinkTransformationMethod;
 import com.wslclds.castn.factory.objects.PlaylistEpisode;
+import com.wslclds.castn.factory.objects.Time;
 import com.wslclds.castn.helpers.ThemeHelper;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,6 +72,8 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
     TextView date;
     @BindView(R.id.duration)
     TextView duration;
+    @BindView(R.id.ellapsed)
+    TextView ellapsed;
     @BindView(R.id.image)
     ImageView image;
     @BindView(R.id.play)
@@ -134,6 +137,13 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
 
                 //date.setText(DateUtils.getRelativeTimeSpanString(episode.getPubDate(),new Date().getTime(),DateUtils.MINUTE_IN_MILLIS).toString());
                 duration.setText(episode.getDuration());
+                Time time = databaseManager.getElapsedTimeObjectFor(episode.getEnclosureUrl());
+                if(time != null){
+                    duration.setText(Helper.formatTime(time.getTotalTime()));
+                    ellapsed.setText(Helper.formatTime(time.getElapsedTime()));
+                }else {
+                    ellapsed.setText("00:00:00");
+                }
 
                 if(color != 0){
                     GlideApp.with(EpisodeDetailActivity.this).load(episode.getImage()).override(200,200).centerCrop().into(image);

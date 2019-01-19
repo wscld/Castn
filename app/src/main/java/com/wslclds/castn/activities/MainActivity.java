@@ -556,6 +556,7 @@ public class MainActivity extends SupportActivity{
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if(seeking){
                     audioPlayerService.seekTo(i);
+                    updateProgress(i,seekBar.getMax());
                 }
             }
 

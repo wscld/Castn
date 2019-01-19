@@ -92,6 +92,9 @@ public class SettingsFragment extends SupportFragment {
         MenuItem i5 = new MenuItem("Feedback",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_message_draw).color(Color.WHITE).paddingDp(9));
         itemAdapter.add(i5);
 
+        MenuItem i6 = new MenuItem("About",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_information_variant).color(Color.WHITE).paddingDp(9));
+        itemAdapter.add(i6);
+
 
         fastAdapter.withOnClickListener(new OnClickListener() {
             @Override
@@ -133,6 +136,8 @@ public class SettingsFragment extends SupportFragment {
                     CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                     CustomTabsIntent customTabsIntent = builder.build();
                     customTabsIntent.launchUrl(getContext(), Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSeo5IvSkT5hB14aSHin6dnJ5YhDLUxqH-fY7VRpKAD3J0O-tg/viewform?usp=sf_link"));
+                }else if(position == 5){
+                    start(AboutFragment.newInstance());
                 }
 
                 return true;

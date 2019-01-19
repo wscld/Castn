@@ -984,6 +984,20 @@ public class DatabaseManager {
         return 0;
     }
 
+    public boolean isEpisodeListened(String enclosureUrl){
+        Realm realm = getRealmInstance();
+        Time time = realm.where(Time.class).contains("enclosureUrl",enclosureUrl).findFirst();
+        if(time != null){
+            long tolerance = (long)(time.getTotalTime() / (long)100) * (long)10;
+            if(time.getElapsedTime()+tolerance >= time.getTotalTime()) {
+                return true;
+            }else {
+                return false;
+            }
+        }
+        return false;
+    }
+
     public Time getElapsedTimeObjectFor(String enclosureUrl){
         Realm realm = getRealmInstance();
 

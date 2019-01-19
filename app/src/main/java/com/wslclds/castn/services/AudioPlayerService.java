@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.google.android.exoplayer2.ExoPlayer;
 import com.wslclds.castn.activities.MainActivity;
 import com.wslclds.castn.factory.DatabaseManager;
 import com.wslclds.castn.factory.objects.Download;
@@ -65,6 +66,7 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
     DatabaseManager databaseManager;
     AlarmManager alarmManager;
     long alarmManagerTime;
+    long duration = 0;
 
     private static final String CHANNEL_ID = "media_playback_channel_1";
     private static final String MEDIA_SESSION_TAG = "AudioPlayerService";
@@ -172,11 +174,12 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mediaPlayer) {
+                    duration = mediaPlayer.getDuration();
                     long storedTime = databaseManager.getElapsedTimeFor(currentEpisode.getEnclosureUrl());
 
                     play();
-                    if(storedTime+10000 < mediaPlayer.getDuration()) {
-                        mediaPlayer.seekTo((int) storedTime);
+                    if(storedTime+10000 < getDuration()) {
+                        seekTo((int)storedTime);
                     }
                     onChange.onPlayingStateChanged(isPlaying());
                     loading = false;
@@ -415,15 +418,11 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
     }
 
     public void forward(int time){
-        if(mediaPlayer != null){
-            mediaPlayer.seekTo((int) (getPosition()+time));
-        }
+        seekTo((int) (getPosition()+time));
     }
 
     public void backward(int time){
-        if(mediaPlayer != null){
-            mediaPlayer.seekTo((int) (getPosition()-time));
-        }
+            seekTo((int) (getPosition()-time));
     }
 
     public long getPosition(){
@@ -436,14 +435,18 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
 
     public long getDuration(){
         if(mediaPlayer != null){
-            return mediaPlayer.getDuration();
+            return duration;
         }
         return 0;
     }
 
     public void seekTo(int position){
         if(mediaPlayer != null){
-            mediaPlayer.seekTo(position);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                mediaPlayer.seekTo(position,MediaPlayer.SEEK_CLOSEST);
+            }else {
+                mediaPlayer.seekTo(position);
+            }
         }
     }
 

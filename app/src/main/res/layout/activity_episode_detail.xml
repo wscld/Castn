@@ -75,19 +75,9 @@
                                         android:orientation="vertical"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content">
-                                        <TextView
-                                            android:text="title"
-                                            android:textColor="@color/white"
-                                            android:id="@+id/title"
-                                            android:singleLine="true"
-                                            android:ellipsize="marquee"
-                                            android:textSize="16sp"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content" />
                                         <LinearLayout
                                             android:orientation="horizontal"
                                             android:gravity="center|left"
-                                            android:layout_marginTop="5dp"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content">
                                             <android.support.v7.widget.CardView
@@ -106,11 +96,54 @@
                                                     android:layout_height="wrap_content" />
                                             </android.support.v7.widget.CardView>
                                             <TextView
+                                                tools:text="title"
+                                                android:textColor="@color/white"
+                                                android:id="@+id/title"
+                                                android:singleLine="true"
+                                                android:ellipsize="marquee"
+                                                android:textSize="16sp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content" />
+                                        </LinearLayout>
+                                        <LinearLayout
+                                            android:orientation="horizontal"
+                                            android:gravity="center|left"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+                                            <TextView
+                                                android:text="Duration: "
+                                                android:textColor="@color/white"
+                                                android:singleLine="true"
+                                                android:textSize="10sp"
+                                                android:alpha="0.7"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content" />
+                                            <TextView
+                                                tools:text="00:00:00"
                                                 android:textColor="@color/white"
                                                 android:id="@+id/duration"
                                                 android:singleLine="true"
                                                 android:textSize="10sp"
+                                                android:alpha="1"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content" />
+                                            <TextView
+                                                android:text="Played: "
+                                                android:layout_marginLeft="10dp"
+                                                android:textColor="@color/white"
+                                                android:singleLine="true"
+                                                android:textSize="10sp"
                                                 android:alpha="0.7"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content" />
+                                            <TextView
+                                                tools:text="00:00:00"
+                                                android:textColor="@color/white"
+                                                android:id="@+id/ellapsed"
+                                                android:singleLine="true"
+                                                android:textSize="10sp"
+                                                android:alpha="1"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content" />
                                         </LinearLayout>

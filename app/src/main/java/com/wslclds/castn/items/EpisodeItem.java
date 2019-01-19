@@ -3,6 +3,7 @@ package com.wslclds.castn.items;
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +18,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import com.wslclds.castn.factory.DatabaseManager;
 import com.wslclds.castn.factory.objects.Episode;
 import com.wslclds.castn.GlideApp;
 import com.wslclds.castn.R;
@@ -71,6 +74,8 @@ public class EpisodeItem extends AbstractItem<EpisodeItem, EpisodeItem.ViewHolde
         ImageView image;
         @BindView(R.id.progress)
         ProgressBar progressBar;
+        @BindView(R.id.listenedIcon)
+        CardView listenedIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -98,9 +103,13 @@ public class EpisodeItem extends AbstractItem<EpisodeItem, EpisodeItem.ViewHolde
                     private String episodeDuration;
                     private String episodeDate;
                     String episodeDescription;
+                    boolean listened;
 
                     @Override
                     protected Object doInBackground(Object[] objects) {
+                        DatabaseManager databaseManager = new DatabaseManager(itemView.getContext());
+
+                        listened = databaseManager.isEpisodeListened(item.episode.getEnclosureUrl());
                         episodeDescription = item.episode.getPlainDescription();
                         if(episodeDescription.length() > 400){
                             episodeDescription = episodeDescription.substring(0,400)+"...";
@@ -115,6 +124,11 @@ public class EpisodeItem extends AbstractItem<EpisodeItem, EpisodeItem.ViewHolde
                         duration.setText(episodeDuration);
                         date.setText(episodeDate);
                         description.setText(episodeDescription);
+                        if(listened){
+                            listenedIcon.setVisibility(View.VISIBLE);
+                        }else {
+                            listenedIcon.setVisibility(View.GONE);
+                        }
                     }
                 };
                 asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

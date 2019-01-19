@@ -52,14 +52,37 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    tools:text="title"
-                    android:id="@+id/episodeTitle"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:textSize="15sp"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:gravity="center|left"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/listenedIcon"
+                        android:visibility="gone"
+                        android:layout_marginRight="5dp"
+                        app:cardBackgroundColor="?attr/colorPrimary"
+                        app:cardElevation="0dp"
+                        app:cardCornerRadius="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:src="@drawable/ic_check_black_24dp"
+                            android:tint="?attr/inverseColorPrimary"
+                            android:layout_margin="3dp"
+                            android:alpha="0.5"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
+                    </android.support.v7.widget.CardView>
+                    <TextView
+                        tools:text="title"
+                        android:id="@+id/episodeTitle"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:textSize="15sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
                 <TextView
                     tools:text="description"
                     android:id="@+id/description"

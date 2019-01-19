@@ -68,7 +68,7 @@
             android:theme="@style/Popup" />
         <activity
             android:name=".activities.SleepTimerActivity"
-            android:theme="@style/Popup"/>
+            android:theme="@style/Popup" />
         <activity android:name=".activities.IntroActivity" />
     </application>
 
