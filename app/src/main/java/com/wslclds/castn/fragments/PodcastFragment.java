@@ -582,14 +582,14 @@ public class PodcastFragment extends SupportFragment {
                     if(getContext() != null && color != 0){
                         themeColor = darker;
                         topLayout.setBackgroundColor(darker);
-                        GlideApp.with(getContext()).load(podcastImage).diskCacheStrategy(DiskCacheStrategy.ALL).into(image);
+                        GlideApp.with(getContext()).load(podcastImage).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.castn_icon_2).override(200,200).into(image);
                         sendToolbarStatus();
                     }else if(getContext() != null){
-                        GlideApp.with(getContext()).asBitmap().load(podcastImage).diskCacheStrategy(DiskCacheStrategy.ALL).override(200,200).into(new SimpleTarget<Bitmap>() {
+                        GlideApp.with(getContext()).asBitmap().load(podcastImage).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.castn_icon_2).override(200,200).into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                                 if(getContext() != null){
-                                    GlideApp.with(getContext()).load(resource).diskCacheStrategy(DiskCacheStrategy.ALL).into(image);
+                                    GlideApp.with(getContext()).load(resource).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.castn_icon_2).override(200,200).into(image);
                                     Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
                                         @Override
                                         public void onGenerated(@NonNull Palette palette) {

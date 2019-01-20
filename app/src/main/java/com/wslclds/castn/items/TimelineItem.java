@@ -145,11 +145,11 @@ public class TimelineItem extends AbstractItem<TimelineItem,TimelineItem.ViewHol
 
             epTitle.setText(episodeTitle);
             pdTitle.setText(podcastTitle);
-            GlideApp.with(itemView.getContext()).load(podcastImage).override(200,200).diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().thumbnail(0.4f).into(pdImage);
+            GlideApp.with(itemView.getContext()).load(podcastImage).override(200,200).diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().thumbnail(0.3f).placeholder(R.drawable.castn_icon_2).into(pdImage);
             if(!podcastImage.equals(episodeImage)){
                 epImage.setVisibility(View.VISIBLE);
                 epImageCard.setVisibility(View.VISIBLE);
-                GlideApp.with(itemView.getContext()).load(episodeImage).diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().thumbnail(0.5f).into(epImage);
+                GlideApp.with(itemView.getContext()).load(episodeImage).diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().thumbnail(0.3f).placeholder(R.drawable.castn_icon_2).into(epImage);
             }else {
                 epImage.setVisibility(View.GONE);
                 epImageCard.setVisibility(View.GONE);

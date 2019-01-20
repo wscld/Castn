@@ -89,7 +89,7 @@ public class EpisodeItem extends AbstractItem<EpisodeItem, EpisodeItem.ViewHolde
                 String episodeImage = item.episode.getImage();
 
                 title.setText(episodeTitle);
-                GlideApp.with(itemView.getContext()).asBitmap().load(episodeImage).override(300,300).centerCrop().into(image);
+                GlideApp.with(itemView.getContext()).asBitmap().load(episodeImage).override(300,300).centerCrop().thumbnail(0.3f).placeholder(R.drawable.castn_icon_2).into(image);
 
                 if(item.progress > 0){
                     progressBar.setVisibility(View.VISIBLE);
