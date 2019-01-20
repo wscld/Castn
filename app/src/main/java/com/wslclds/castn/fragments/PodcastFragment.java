@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -49,6 +50,8 @@ import butterknife.ButterKnife;
 import com.wslclds.castn.activities.EpisodeDetailActivity;
 import com.wslclds.castn.activities.MainActivity;
 import com.wslclds.castn.activities.PodcastDetailActivity;
+import com.wslclds.castn.builders.AlertBuilder;
+import com.wslclds.castn.builders.PopUpMenuBuilder;
 import com.wslclds.castn.factory.DatabaseManager;
 import com.wslclds.castn.helpers.Helper;
 import com.wslclds.castn.factory.objects.Episode;
@@ -92,6 +95,10 @@ public class PodcastFragment extends SupportFragment {
     ProgressBar loadingEpisodeCount;
     @BindView(R.id.searchView)
     FloatingSearchView searchView;
+    @BindView(R.id.subscribedLayout)
+    LinearLayout subscribedLayout;
+    @BindView(R.id.moreOptionsButton)
+    ImageButton moreOptionsButton;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -144,10 +151,10 @@ public class PodcastFragment extends SupportFragment {
 
         if(databaseManager.isSubscribed(currentUrl)){
             subscribe.setText("unsubscribe");
-            searchView.setVisibility(View.VISIBLE);
+            subscribedLayout.setVisibility(View.VISIBLE);
         }else {
             subscribe.setText("subscribe");
-            searchView.setVisibility(View.GONE);
+            subscribedLayout.setVisibility(View.GONE);
         }
 
         searchView.setDimBackground(false);
@@ -201,6 +208,38 @@ public class PodcastFragment extends SupportFragment {
             }
         });
 
+        moreOptionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<String> items = new ArrayList<>();
+                items.add("Download");
+
+                new PopUpMenuBuilder(getContext(), v, items, new PopUpMenuBuilder.WithOnClickListener() {
+                    @Override
+                    public void onClickListener(int position) {
+                        if (position == 0){
+                            new AlertBuilder(getContext(), "Are you sure?", "This will download only the latest and unlistened episodes", new AlertBuilder.onButtonClick2() {
+                                @Override
+                                public void onConfirm() {
+                                    if(episodes.size() > 5){
+                                        Helper helper = new Helper(getContext());
+                                        helper.makeDownload(episodes.subList(0,5));
+                                    }else if(episodes.size() > 0){
+                                        Helper helper = new Helper(getContext());
+                                        helper.makeDownload(episodes);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancel() {
+
+                                }
+                            }).show();
+                        }
+                    }
+                }).showMenu();
+            }
+        });
 
         fastAdapter.withOnClickListener(new OnClickListener() {
             @Override
@@ -251,10 +290,10 @@ public class PodcastFragment extends SupportFragment {
         sendUpdate();
         if(databaseManager.isSubscribed(currentUrl)){
             subscribe.setText("unsubscribe");
-            searchView.setVisibility(View.VISIBLE);
+            subscribedLayout.setVisibility(View.VISIBLE);
         }else if(episodes != null && podcast != null){
             subscribe.setText("subscribe");
-            searchView.setVisibility(View.GONE);
+            subscribedLayout.setVisibility(View.GONE);
         }
     }
 

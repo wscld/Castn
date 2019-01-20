@@ -25,10 +25,15 @@ import org.greenrobot.eventbus.EventBus;
 
 import com.wslclds.castn.R;
 import com.wslclds.castn.builders.AlertBuilder;
+import com.wslclds.castn.builders.AlertWithInputBuilder;
+import com.wslclds.castn.builders.AlertWithListBuilder;
 import com.wslclds.castn.factory.objects.ToolbarEvent;
 import com.wslclds.castn.helpers.Helper;
 import com.wslclds.castn.helpers.ThemeHelper;
 import com.wslclds.castn.items.MenuItem;
+
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -75,8 +80,7 @@ public class SettingsFragment extends SupportFragment {
         FastAdapter fastAdapter = FastAdapter.with(itemAdapter);
         recyclerView.setAdapter(fastAdapter);
 
-        MenuItem i1 = new MenuItem("Dark Theme",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_palette).color(Color.WHITE).paddingDp(9),true);
-        i1.setSwitchValue(themeHelper.isDark());
+        MenuItem i1 = new MenuItem("Theme",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_palette).color(Color.WHITE).paddingDp(9),false);
         itemAdapter.add(i1);
 
         MenuItem i2 = new MenuItem("Automatic download",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_download).color(Color.WHITE).paddingDp(9),true);
@@ -100,14 +104,27 @@ public class SettingsFragment extends SupportFragment {
             @Override
             public boolean onClick(@javax.annotation.Nullable View v, IAdapter adapter, IItem item, int position) {
                 if(position == 0){
-                    if(themeHelper.isDark()){
-                        themeHelper.setDark(false);
-                    }else {
-                        themeHelper.setDark(true);
-                    }
-                    i1.setSwitchValue(themeHelper.isDark());
-                    fastAdapter.notifyAdapterItemChanged(0);
-                    getActivity().recreate();
+                    ArrayList<IItem> items = new ArrayList<>();
+                    MenuItem ai1 = new MenuItem("Light",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_circle).color(getResources().getColor(R.color.colorPrimary)).paddingDp(0),false);
+                    items.add(ai1);
+                    MenuItem ai2 = new MenuItem("Dark",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_circle).color(getResources().getColor(R.color.darkThemeColorPrimary)).paddingDp(0),false);
+                    items.add(ai2);
+                    MenuItem ai3 = new MenuItem("Dark OLED",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_circle).color(getResources().getColor(R.color.AMOLEDThemeColorPrimary)).paddingDp(0),false);
+                    items.add(ai3);
+
+                    new AlertWithListBuilder(getContext(), items, null, null, false, new AlertWithListBuilder.OnAction() {
+                        @Override
+                        public void onClick(IItem item, int position) {
+                            if(position == 0){
+                                themeHelper.setTheme(ThemeHelper.THEME_LIGHT);
+                            }else if(position == 1){
+                                themeHelper.setTheme(ThemeHelper.THEME_DARK);
+                            }else{
+                                themeHelper.setTheme(ThemeHelper.THEME_AMOLED);
+                            }
+                            getActivity().recreate();
+                        }
+                    }).show();
                 }else if(position == 1){
                     if(!helper.isAutomaticDownload()) {
                         new AlertBuilder(getContext(), "Enable automatic downloads?", "This will automatically download new episodes when available. This may cause high network usage.", new AlertBuilder.onButtonClick2() {

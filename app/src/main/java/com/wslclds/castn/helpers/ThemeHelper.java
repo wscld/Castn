@@ -7,35 +7,45 @@ import android.graphics.Color;
 import com.wslclds.castn.R;
 
 public class ThemeHelper {
-    Context context;
-    boolean dark;
+    public static int THEME_LIGHT = 0;
+    public static int THEME_DARK = 1;
+    public static int THEME_AMOLED = 2;
+
+    private Context context;
+    private int theme;
 
     public ThemeHelper(Context context){
         SharedPreferences preferences = context.getSharedPreferences("app.castn", Context.MODE_PRIVATE);
-        dark = preferences.getBoolean("dark",false);
+        theme = preferences.getInt("theme",0);
         this.context = context;
     }
 
-    public void setDark(boolean dark){
-        this.dark = dark;
+    public void setTheme(int theme){
+        this.theme = theme;
         SharedPreferences preferences = context.getSharedPreferences("app.castn", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("dark", dark);
+        editor.putInt("theme", theme);
         editor.commit();
     }
 
-    public boolean isDark() {
-        return dark;
+    public int getTheme() {
+        return theme;
     }
 
     public void apply(boolean full){
-        if(dark) {
+        if(theme == THEME_DARK) {
             if(full){
                 context.setTheme(R.style.AppThemeDark);
             }else {
                 context.setTheme(R.style.PopupDark);
             }
-        }else {
+        }else if(theme == THEME_AMOLED){
+            if(full){
+                context.setTheme(R.style.AppThemeAMOLED);
+            }else {
+                context.setTheme(R.style.PopupAMOLED);
+            }
+        }else if(theme == THEME_LIGHT){
             if(full){
                 context.setTheme(R.style.AppTheme);
             }else {
@@ -45,7 +55,7 @@ public class ThemeHelper {
     }
 
     public int getTextColor(){
-        if(dark){
+        if(theme == THEME_AMOLED || theme == THEME_DARK){
             return Color.WHITE;
         }else {
             return Color.BLACK;
@@ -53,7 +63,7 @@ public class ThemeHelper {
     }
 
     public int getThemeColor(int id) {
-        if(dark){
+        if(theme == THEME_DARK){
             if(id == R.color.background){
                 return R.color.darkThemeColorPrimaryDark;
             }else if(id == R.color.colorPrimary){
@@ -68,6 +78,22 @@ public class ThemeHelper {
                 return R.color.darkBottomNavDefault;
             }else if(id == R.color.bottomNavSelected){
                 return R.color.darkBottomNavSelected;
+            }
+        }else if(theme == THEME_AMOLED){
+            if(id == R.color.background){
+                return R.color.AMOLEDThemeColorPrimaryDark;
+            }else if(id == R.color.colorPrimary){
+                return R.color.AMOLEDThemeColorPrimary;
+            }else if(id == R.color.colorPrimaryDark){
+                return R.color.AMOLEDThemeColorPrimaryDark;
+            }else if(id == R.color.colorPrimaryDarkDarker){
+                return R.color.AMOLEDThemeColorPrimaryDarkDarker;
+            }else if(id == R.color.colorAccent){
+                return R.color.AMOLEDThemeColorAccent;
+            }else if(id == R.color.bottomNavDefault){
+                return R.color.AMOLEDBottomNavDefault;
+            }else if(id == R.color.bottomNavSelected){
+                return R.color.AMOLEDBottomNavSelected;
             }
         }
         return id;

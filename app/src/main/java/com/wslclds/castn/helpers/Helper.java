@@ -12,6 +12,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import com.wslclds.castn.builders.AlertBuilder;
@@ -58,6 +59,59 @@ public class Helper {
                     .start();
         }else{
             startDownload(episode);
+        }
+    }
+
+
+    public void makeDownload(ArrayList<Episode> episodes){
+        DatabaseManager databaseManager = new DatabaseManager(context);
+        for(Episode episode : episodes){
+            if(!databaseManager.isEpisodeListened(episode.getEnclosureUrl())) {
+                databaseManager.addDownloadToQueue(episode);
+            }
+        }
+
+        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
+            AndPermission.with(context)
+                    .runtime()
+                    .permission(Permission.Group.STORAGE)
+                    .onGranted(permissions -> {
+                        Intent intent = new Intent(context, DownloadService.class);
+                        context.startService(intent);
+                    })
+                    .onDenied(permissions -> {
+                        new AlertBuilder(context, "Permission denied", "Storage permission is needed").show();
+                    })
+                    .start();
+        }else{
+            Intent intent = new Intent(context, DownloadService.class);
+            context.startService(intent);
+        }
+    }
+
+    public void makeDownload(List<Episode> episodes){
+        DatabaseManager databaseManager = new DatabaseManager(context);
+        for(Episode episode : episodes){
+            if(!databaseManager.isEpisodeListened(episode.getEnclosureUrl())) {
+                databaseManager.addDownloadToQueue(episode);
+            }
+        }
+
+        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
+            AndPermission.with(context)
+                    .runtime()
+                    .permission(Permission.Group.STORAGE)
+                    .onGranted(permissions -> {
+                        Intent intent = new Intent(context, DownloadService.class);
+                        context.startService(intent);
+                    })
+                    .onDenied(permissions -> {
+                        new AlertBuilder(context, "Permission denied", "Storage permission is needed").show();
+                    })
+                    .start();
+        }else{
+            Intent intent = new Intent(context, DownloadService.class);
+            context.startService(intent);
         }
     }
 

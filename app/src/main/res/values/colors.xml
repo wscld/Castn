@@ -17,8 +17,8 @@
     <color name="darkCardColorDarker">#454a58</color>
     <color name="darkInverseColorPrimary">#FFF</color>
     <!-- AMOLED theme -->
-    <color name="AMOLEDThemeColorPrimary">#212121</color>
-    <color name="AMOLEDThemeColorPrimaryDark">#131313</color>
+    <color name="AMOLEDThemeColorPrimary">#060606</color>
+    <color name="AMOLEDThemeColorPrimaryDark">#000000</color>
     <color name="AMOLEDThemeColorPrimaryDarkDarker">#000000</color>
     <color name="AMOLEDThemeColorAccent">#F44336</color>
     <color name="AMOLEDCardColor">#000000</color>
@@ -30,6 +30,9 @@
     <!-- bottomnav dark-->
     <color name="darkBottomNavDefault">#5dffffff</color>
     <color name="darkBottomNavSelected">#afffffff</color>
+    <!-- bottomnav AMOLED-->
+    <color name="AMOLEDBottomNavDefault">#5dffffff</color>
+    <color name="AMOLEDBottomNavSelected">#afffffff</color>
     <!-- other colors -->
     <color name="backgroundLight">#f1f1f1</color>
     <color name="backgroundDark">#f1f1f1</color>

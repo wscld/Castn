@@ -4,6 +4,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,11 +21,19 @@ import com.wslclds.castn.R;
 public class TextHeaderItem  extends AbstractItem<TextHeaderItem,TextHeaderItem.ViewHolder> {
 
     private String text;
+    private String buttonText;
     private Drawable icon;
 
     public TextHeaderItem(String text, Drawable icon){
         this.text = text;
         this.icon = icon;
+        this.buttonText = null;
+    }
+
+    public TextHeaderItem(String text, String buttonText, Drawable icon){
+        this.text = text;
+        this.icon = icon;
+        this.buttonText = buttonText;
     }
 
     @NonNull
@@ -48,6 +57,8 @@ public class TextHeaderItem  extends AbstractItem<TextHeaderItem,TextHeaderItem.
         ImageView icon;
         @BindView(R.id.text)
         TextView text;
+        @BindView(R.id.button)
+        public Button button;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -59,6 +70,12 @@ public class TextHeaderItem  extends AbstractItem<TextHeaderItem,TextHeaderItem.
             icon.setImageDrawable(item.icon);
             icon.setColorFilter(new ThemeHelper(itemView.getContext()).getTextColor(), PorterDuff.Mode.SRC_ATOP);
             text.setText(item.text);
+            if(item.buttonText == null){
+                button.setVisibility(View.GONE);
+            }else {
+                button.setText(item.buttonText);
+                button.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override

@@ -26,6 +26,7 @@ import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.mikepenz.fastadapter.listeners.ClickEventHook;
+import com.mikepenz.fastadapter.listeners.OnBindViewHolderListener;
 import com.mikepenz.iconics.IconicsDrawable;
 
 import org.greenrobot.eventbus.EventBus;
@@ -49,6 +50,7 @@ import com.wslclds.castn.builders.AlertBuilder;
 import com.wslclds.castn.items.DownloadItem;
 import com.wslclds.castn.items.TextHeaderItem;
 import com.wslclds.castn.R;
+import com.wslclds.castn.items.TimelineItem;
 import com.wslclds.castn.services.DownloadService;
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -188,6 +190,40 @@ public class DownloadsFragment extends SupportFragment {
 
         itemAdapterHeader1.add(new TextHeaderItem("Download Queue",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_view_list)));
         itemAdapterHeader2.add(new TextHeaderItem("Downloaded",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_download)));
+
+
+        fastAdapter.withEventHook(new ClickEventHook() {
+            @javax.annotation.Nullable
+            @Override
+            public View onBind(RecyclerView.ViewHolder viewHolder) {
+                if (viewHolder instanceof TextHeaderItem.ViewHolder) {
+                    return ((TextHeaderItem.ViewHolder) viewHolder).button;
+                }
+                return null;
+            }
+
+            @Override
+            public void onClick(View v, int position, FastAdapter fastAdapter, IItem item) {
+                new AlertBuilder(getContext(), "Clear download queue?", null, new AlertBuilder.onButtonClick2() {
+                    @Override
+                    public void onConfirm() {
+                        if(isBound){
+                            for(Download download : downloadService.getDownloadQueue()) {
+                                if(!download.getEnclosureUrl().equals(downloadService.getCurrentDownload().getEnclosureUrl())){
+                                    databaseManager.removeDownload(download.getEnclosureUrl());
+                                }
+                            }
+                            downloadService.updateQueue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                }).show();
+            }
+        });
     }
 
     @Override
@@ -203,6 +239,12 @@ public class DownloadsFragment extends SupportFragment {
             itemAdapterQueue.clear();
 
             ArrayList<Download> downloadQueue = downloadService.getDownloadQueue();
+            if(downloadQueue.size() > 1){
+                itemAdapterHeader1.set(0,new TextHeaderItem("Download Queue","clear",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_view_list)));
+            }else{
+                itemAdapterHeader1.set(0,new TextHeaderItem("Download Queue",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_view_list)));
+            }
+
             for(int i = 0; i < downloadQueue.size(); i++){
                 if(i > 0){
                     DownloadItem downloadItem = new DownloadItem(downloadQueue.get(i));

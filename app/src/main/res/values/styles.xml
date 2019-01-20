@@ -27,6 +27,19 @@
         <item name="backgroundColor">@color/darkThemeColorPrimaryDark</item>
     </style>
 
+    <style name="AppThemeAMOLED" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/AMOLEDThemeColorPrimary</item>
+        <item name="colorPrimaryDark">@color/AMOLEDThemeColorPrimaryDark</item>
+        <item name="colorAccent">@color/AMOLEDThemeColorAccent</item>
+        <item name="android:colorBackground">@color/AMOLEDThemeColorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="cardColor">@color/AMOLEDCardColor</item>
+        <item name="cardColorDarker">@color/AMOLEDCardColorDarker</item>
+        <item name="inverseColorPrimary">@color/AMOLEDInverseColorPrimary</item>
+        <item name="backgroundColor">@color/AMOLEDThemeColorPrimaryDark</item>
+    </style>
+
 
     <style name="Popup" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -58,6 +71,22 @@
         <item name="cardColor">@color/darkCardColor</item>
         <item name="cardColorDarker">@color/darkCardColorDarker</item>
         <item name="inverseColorPrimary">@color/darkInverseColorPrimary</item>
+    </style>
+
+    <style name="PopupAMOLED" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/AMOLEDThemeColorPrimary</item>
+        <item name="colorPrimaryDark">@color/AMOLEDThemeColorPrimaryDark</item>
+        <item name="colorAccent">@color/AMOLEDThemeColorAccent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparentDark</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="cardColor">@color/AMOLEDCardColor</item>
+        <item name="cardColorDarker">@color/AMOLEDCardColorDarker</item>
+        <item name="inverseColorPrimary">@color/AMOLEDInverseColorPrimary</item>
     </style>
 
 </resources>

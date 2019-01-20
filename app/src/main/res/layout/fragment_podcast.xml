@@ -67,18 +67,33 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <com.arlib.floatingsearchview.FloatingSearchView
-                        android:layout_below="@id/topLayout"
-                        android:id="@+id/searchView"
-                        android:elevation="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
+                    <LinearLayout
+                        android:id="@+id/subscribedLayout"
+                        android:orientation="horizontal"
+                        android:gravity="center"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
-                        app:floatingSearch_searchHint="Search for episodes..."
-                        app:floatingSearch_suggestionsListAnimDuration="250"
-                        app:floatingSearch_leftActionMode="showSearch"
-                        app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <com.arlib.floatingsearchview.FloatingSearchView
+                            android:layout_below="@id/topLayout"
+                            android:id="@+id/searchView"
+                            android:elevation="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:layout_height="?attr/actionBarSize"
+                            app:floatingSearch_searchHint="Search for episodes..."
+                            app:floatingSearch_suggestionsListAnimDuration="250"
+                            app:floatingSearch_leftActionMode="showSearch"
+                            app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
+                        <ImageButton
+                            android:id="@+id/moreOptionsButton"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:tint="@color/white"
+                            android:src="@drawable/ic_more_vert_black_24dp"
+                            android:layout_width="43dp"
+                            android:layout_height="44dp" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:orientation="horizontal"
