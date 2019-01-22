@@ -74,7 +74,6 @@ import me.yokeyword.fragmentation.SupportFragment;
 public class PodcastFragment extends SupportFragment {
 
     String currentUrl;
-    FirebaseAnalytics firebaseAnalytics;
     DatabaseManager databaseManager;
     ItemAdapter<EpisodeItem> itemAdapter;
     ItemAdapter<FooterItem> loadMoreItemItemAdapter;
@@ -133,7 +132,6 @@ public class PodcastFragment extends SupportFragment {
         themeColor = getResources().getColor(R.color.colorPrimaryDark);
         currentUrl = getArguments().getString("url");
         databaseManager = new DatabaseManager(getContext());
-        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
         setLoadingEpisodes(true);
         setLoadingEpisodeCount(true);
 
@@ -224,10 +222,6 @@ public class PodcastFragment extends SupportFragment {
                             new AlertBuilder(getContext(), "Are you sure?", "This will download only the latest and unlistened episodes", new AlertBuilder.onButtonClick2() {
                                 @Override
                                 public void onConfirm() {
-                                    Bundle params = new Bundle();
-                                    params.putString("full_text", "unlistened_episoes_download");
-                                    firebaseAnalytics.logEvent("unlistened_episoes_download", params);
-
                                     if(episodes.size() > 5){
                                         Helper helper = new Helper(getContext());
                                         helper.makeDownload(episodes.subList(0,5));

@@ -189,27 +189,29 @@ public class SearchFragment extends SupportFragment {
 
             @Override
             protected void onPostExecute(Object o) {
-                TextHeaderItem textHeaderItem = new TextHeaderItem("Top Podcasts",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_star));
-                itemAdapter.add(textHeaderItem);
-                super.onPostExecute(o);
-                try {
-                    JSONObject mainObject = new JSONObject(json);
-                    JSONArray mainArray = mainObject.getJSONArray("documents");
-                    for(int i = 0; i < mainArray.length(); i++){
-                        JSONObject fieldObject = mainArray.getJSONObject(i).getJSONObject("fields");
-                        String title = fieldObject.getJSONObject("title").getString("stringValue");
-                        String url = fieldObject.getJSONObject("url").getString("stringValue");
-                        String cover = fieldObject.getJSONObject("cover").getString("stringValue");
+                if (getContext() != null) {
+                    TextHeaderItem textHeaderItem = new TextHeaderItem("Top Podcasts", new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_star));
+                    itemAdapter.add(textHeaderItem);
+                    super.onPostExecute(o);
+                    try {
+                        JSONObject mainObject = new JSONObject(json);
+                        JSONArray mainArray = mainObject.getJSONArray("documents");
+                        for (int i = 0; i < mainArray.length(); i++) {
+                            JSONObject fieldObject = mainArray.getJSONObject(i).getJSONObject("fields");
+                            String title = fieldObject.getJSONObject("title").getString("stringValue");
+                            String url = fieldObject.getJSONObject("url").getString("stringValue");
+                            String cover = fieldObject.getJSONObject("cover").getString("stringValue");
 
-                        Podcast podcast = new Podcast();
-                        podcast.setUrl(url);
-                        podcast.setTitle(title);
-                        podcast.setImage(cover);
-                        PodcastItem podcastItem = new PodcastItem(podcast);
-                        itemAdapter.add(podcastItem);
+                            Podcast podcast = new Podcast();
+                            podcast.setUrl(url);
+                            podcast.setTitle(title);
+                            podcast.setImage(cover);
+                            PodcastItem podcastItem = new PodcastItem(podcast);
+                            itemAdapter.add(podcastItem);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
             }
         };
