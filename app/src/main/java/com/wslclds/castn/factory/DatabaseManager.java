@@ -1123,7 +1123,7 @@ public class DatabaseManager {
         Realm realm = getRealmInstance();
         realm.refresh();
         ArrayList<Download> downloads = new ArrayList<>();
-        RealmResults<Download> downloadQueueRealm = realm.where(Download.class).equalTo("completed",true).sort("date",Sort.ASCENDING).findAll();
+        RealmResults<Download> downloadQueueRealm = realm.where(Download.class).equalTo("completed",true).sort("date",Sort.DESCENDING).findAll();
         if(downloadQueueRealm != null){
             realm.beginTransaction();
             for(Download download : downloadQueueRealm){
@@ -1133,6 +1133,27 @@ public class DatabaseManager {
         }
         realm.close();
         return downloads;
+    }
+
+
+    public List<Download> getDownloaded(long fromDate){
+        Realm realm = getRealmInstance();
+        realm.refresh();
+        ArrayList<Download> downloads = new ArrayList<>();
+        RealmResults<Download> downloadQueueRealm = realm.where(Download.class).equalTo("completed",true).greaterThan("date",fromDate).sort("date",Sort.DESCENDING).findAll();
+        if(downloadQueueRealm != null){
+            realm.beginTransaction();
+            for(Download download : downloadQueueRealm){
+                downloads.add(realm.copyFromRealm(download));
+            }
+            realm.commitTransaction();
+        }
+        realm.close();
+        if(downloads.size() > 5) {
+            return downloads.subList(0, 5);
+        }else {
+            return downloads;
+        }
     }
 
     public void removeDownload(String enclosureUrl){

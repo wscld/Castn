@@ -32,6 +32,7 @@ import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
@@ -73,6 +74,7 @@ import me.yokeyword.fragmentation.SupportFragment;
 public class PodcastFragment extends SupportFragment {
 
     String currentUrl;
+    FirebaseAnalytics firebaseAnalytics;
     DatabaseManager databaseManager;
     ItemAdapter<EpisodeItem> itemAdapter;
     ItemAdapter<FooterItem> loadMoreItemItemAdapter;
@@ -131,6 +133,7 @@ public class PodcastFragment extends SupportFragment {
         themeColor = getResources().getColor(R.color.colorPrimaryDark);
         currentUrl = getArguments().getString("url");
         databaseManager = new DatabaseManager(getContext());
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
         setLoadingEpisodes(true);
         setLoadingEpisodeCount(true);
 
@@ -221,6 +224,10 @@ public class PodcastFragment extends SupportFragment {
                             new AlertBuilder(getContext(), "Are you sure?", "This will download only the latest and unlistened episodes", new AlertBuilder.onButtonClick2() {
                                 @Override
                                 public void onConfirm() {
+                                    Bundle params = new Bundle();
+                                    params.putString("full_text", "unlistened_episoes_download");
+                                    firebaseAnalytics.logEvent("unlistened_episoes_download", params);
+
                                     if(episodes.size() > 5){
                                         Helper helper = new Helper(getContext());
                                         helper.makeDownload(episodes.subList(0,5));

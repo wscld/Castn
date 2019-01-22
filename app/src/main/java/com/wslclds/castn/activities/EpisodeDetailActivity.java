@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.liuguangqiang.swipeback.SwipeBackLayout;
 import com.mikepenz.fastadapter.IItem;
@@ -55,6 +56,7 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
     boolean justDescription;
     Episode episode;
     String playlistId;
+    FirebaseAnalytics firebaseAnalytics;
     DatabaseManager databaseManager;
     ThemeHelper themeHelper;
 
@@ -101,6 +103,7 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
         justDescription = getIntent().getBooleanExtra("justDescription",false);
 
         databaseManager = new DatabaseManager(this);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         if(playlistId != null){
             play.setVisibility(View.GONE);
@@ -183,6 +186,10 @@ public class EpisodeDetailActivity extends AppCompatActivity implements SwipeBac
                 download.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Bundle params = new Bundle();
+                        params.putString("full_text", "single_episode_download");
+                        firebaseAnalytics.logEvent("single_episode_download", params);
+
                         new Helper(EpisodeDetailActivity.this).makeDownload(episode);
                         setDownloadEnabled(false);
                     }

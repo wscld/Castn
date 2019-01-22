@@ -26,6 +26,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -33,6 +34,7 @@ import com.wslclds.castn.activities.MainActivity;
 import com.wslclds.castn.factory.DatabaseManager;
 import com.wslclds.castn.factory.objects.Download;
 import com.wslclds.castn.GlideApp;
+import com.wslclds.castn.factory.objects.Episode;
 import com.wslclds.castn.helpers.Helper;
 import com.wslclds.castn.R;
 
@@ -149,8 +151,10 @@ public class DownloadService extends Service {
             String title = downloadQueue.get(0).getTitle();
             String image = downloadQueue.get(0).getImage();
             String enclosureUrl = downloadQueue.get(0).getEnclosureUrl();
+            Episode episode = databaseManager.getEpisode(enclosureUrl);
             String directory = getStorageFolder().toString();
-            String fileName = new Date().getTime()+"_"+getFileName(enclosureUrl);
+            //String fileName = checkFilename(directory,episode.getPodcastTitle()+" - "+episode.getTitle());
+            String fileName = getFileName(enclosureUrl);
             String fileDirectory = directory+"/"+fileName;
 
             databaseManager.setDownloadLocalPath(enclosureUrl,fileDirectory);
@@ -270,6 +274,16 @@ public class DownloadService extends Service {
             }
         }
         return result;
+    }
+
+    private String checkFilename(String directory, String filename) {
+        filename = filename.replace("/","");
+        filename = filename.replace(" ","_");
+        File f = new File(directory+"/"+filename);
+        if(f.exists()){
+            return filename+"_"+new Date().getTime();
+        }
+        return filename;
     }
 
     private PendingIntent makeContentIntent(){

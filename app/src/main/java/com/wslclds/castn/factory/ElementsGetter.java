@@ -223,7 +223,9 @@ public class ElementsGetter {
     public long getEpisodeEnclosureLength(){
         long length = 0;
         if (element.select("enclosure") != null && element.select("enclosure").attr("length") != null && element.select("enclosure").attr("length").toString().length() > 0) {
-            length = Long.parseLong(element.select("enclosure").attr("length").replaceAll("[^0-9]", ""));
+            try{
+                length = Long.parseLong(element.select("enclosure").attr("length").replaceAll("[^0-9]", ""));
+            }catch (Exception e){}
         }
         return length;
     }

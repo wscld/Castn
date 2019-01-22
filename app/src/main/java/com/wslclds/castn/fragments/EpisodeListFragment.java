@@ -36,6 +36,8 @@ import com.wslclds.castn.factory.objects.Episode;
 import com.wslclds.castn.factory.objects.ToolbarEvent;
 import com.wslclds.castn.items.EpisodeItem;
 import com.wslclds.castn.R;
+import com.wslclds.castn.items.StorageStatsItem;
+
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -138,6 +140,7 @@ public class EpisodeListFragment extends SupportFragment {
     }
 
     private void loadDownloaded(){
+        itemAdapter.add(new StorageStatsItem());
         ArrayList<Download> downloadeds = databaseManager.getDownloaded();
         ArrayList<EpisodeItem> episodesItems = new ArrayList<>();
         for(Download download : downloadeds){

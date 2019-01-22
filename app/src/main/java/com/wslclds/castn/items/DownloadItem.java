@@ -89,7 +89,7 @@ public class DownloadItem extends AbstractItem<DownloadItem, DownloadItem.ViewHo
         public void bindView(DownloadItem item, List payloads) {
             optionsButton.setImageDrawable(new IconicsDrawable(itemView.getContext(),CommunityMaterial.Icon.cmd_dots_vertical));
             title.setText(item.download.getTitle());
-            GlideApp.with(itemView.getContext()).load(item.download.getImage()).override(200,200).centerCrop().into(image);
+            GlideApp.with(itemView.getContext()).load(item.download.getImage()).override(200,200).thumbnail(0.3f).placeholder(R.drawable.castn_icon_2).centerCrop().into(image);
             if(item.progress > 0){
                 progressBar.setIndeterminate(false);
                 progressBar.setProgress(item.progress);

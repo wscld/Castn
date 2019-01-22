@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
@@ -46,6 +47,7 @@ public class SettingsFragment extends SupportFragment {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     ItemAdapter itemAdapter;
+    FirebaseAnalytics firebaseAnalytics;
 
     public static SettingsFragment newInstance() {
 
@@ -74,6 +76,7 @@ public class SettingsFragment extends SupportFragment {
 
         ThemeHelper themeHelper = new ThemeHelper(getContext());
         Helper helper = new Helper(getContext());
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         itemAdapter = new ItemAdapter();
@@ -115,6 +118,10 @@ public class SettingsFragment extends SupportFragment {
                     new AlertWithListBuilder(getContext(), items, null, null, false, new AlertWithListBuilder.OnAction() {
                         @Override
                         public void onClick(IItem item, int position) {
+                            Bundle params = new Bundle();
+                            params.putString("theme", String.valueOf(position));
+                            firebaseAnalytics.logEvent("set_theme", params);
+
                             if(position == 0){
                                 themeHelper.setTheme(ThemeHelper.THEME_LIGHT);
                             }else if(position == 1){

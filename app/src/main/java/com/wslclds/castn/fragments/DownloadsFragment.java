@@ -48,6 +48,7 @@ import com.wslclds.castn.GlideApp;
 import com.wslclds.castn.helpers.Helper;
 import com.wslclds.castn.builders.AlertBuilder;
 import com.wslclds.castn.items.DownloadItem;
+import com.wslclds.castn.items.FooterItem;
 import com.wslclds.castn.items.TextHeaderItem;
 import com.wslclds.castn.R;
 import com.wslclds.castn.items.TimelineItem;
@@ -70,6 +71,7 @@ public class DownloadsFragment extends SupportFragment {
     ItemAdapter itemAdapterDownloaded;
     ItemAdapter itemAdapterHeader1;
     ItemAdapter itemAdapterHeader2;
+    ItemAdapter<FooterItem> loadMoreItemItemAdapter;
     FastAdapter fastAdapter;
     DatabaseManager databaseManager;
     @BindView(R.id.recyclerView)
@@ -115,7 +117,8 @@ public class DownloadsFragment extends SupportFragment {
         itemAdapterDownloaded = new ItemAdapter();
         itemAdapterHeader1 = new ItemAdapter();
         itemAdapterHeader2 = new ItemAdapter();
-        fastAdapter = FastAdapter.with(new ArrayList(Arrays.asList(itemAdapterHeader1,itemAdapterQueue,itemAdapterHeader2,itemAdapterDownloaded)));
+        loadMoreItemItemAdapter = new ItemAdapter<>();
+        fastAdapter = FastAdapter.with(new ArrayList(Arrays.asList(itemAdapterHeader1,itemAdapterQueue,itemAdapterHeader2,itemAdapterDownloaded,loadMoreItemItemAdapter)));
         recyclerView.setAdapter(fastAdapter);
 
         fastAdapter.withEventHook(new ClickEventHook() {
@@ -126,6 +129,10 @@ public class DownloadsFragment extends SupportFragment {
                     List<View> list = new ArrayList<>();
                     list.add(((DownloadItem.ViewHolder) viewHolder).optionsButton);
                     list.add(((DownloadItem.ViewHolder) viewHolder).mainLayout);
+                    return list;
+                }else if (viewHolder instanceof FooterItem.ViewHolder) {
+                    List<View> list = new ArrayList<>();
+                    list.add(((FooterItem.ViewHolder) viewHolder).loadMoreLayout);
                     return list;
                 }
                 return null;
@@ -154,6 +161,12 @@ public class DownloadsFragment extends SupportFragment {
                             }).show();
                         }
                     }).showMenu();
+                }else if(v.getId() == R.id.loadMoreLayout){
+                    if(itemAdapterDownloaded.getAdapterItemCount() > 0){
+                        ((SupportFragment) getParentFragment()).start(EpisodeListFragment.newInstance(EpisodeListFragment.TYPE_DOWNLOADED));
+                    }else {
+                        new AlertBuilder(getContext(),"No episodes available",null);
+                    }
                 }
             }
         });
@@ -190,6 +203,7 @@ public class DownloadsFragment extends SupportFragment {
 
         itemAdapterHeader1.add(new TextHeaderItem("Download Queue",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_view_list)));
         itemAdapterHeader2.add(new TextHeaderItem("Downloaded",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_download)));
+        loadMoreItemItemAdapter.add(new FooterItem("Load all"));
 
 
         fastAdapter.withEventHook(new ClickEventHook() {
@@ -260,8 +274,8 @@ public class DownloadsFragment extends SupportFragment {
         if(itemAdapterDownloaded != null){
             itemAdapterDownloaded.clear();
 
-            ArrayList<Download> downloads = databaseManager.getDownloaded();
-            for(int i = 0; i < downloads.size(); i++){
+            List<Download> downloads = databaseManager.getDownloaded(0);
+            for (int i = 0; i < downloads.size(); i++) {
                 itemAdapterDownloaded.add(new DownloadItem(downloads.get(i)));
             }
         }
