@@ -10,6 +10,8 @@ import android.os.Build;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -199,6 +201,14 @@ public class Helper {
         }else {
             return "00:00:00";
         }
+    }
+
+    public static boolean isNumeric(String str)
+    {
+        NumberFormat formatter = NumberFormat.getInstance();
+        ParsePosition pos = new ParsePosition(0);
+        formatter.parse(str, pos);
+        return str.length() == pos.getIndex();
     }
 
     public static String urlToId(String url){

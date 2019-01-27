@@ -9,8 +9,8 @@ android {
         applicationId "com.wslclds.castn"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 9
-        versionName "0.4.4 Beta"
+        versionCode 10
+        versionName "0.4.5 Beta"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

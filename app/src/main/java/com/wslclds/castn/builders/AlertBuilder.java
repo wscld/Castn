@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.text.InputType;
 import android.widget.EditText;
 
+import com.wslclds.castn.helpers.Helper;
+
 public class AlertBuilder {
     AlertDialog alertDialog;
 
@@ -32,6 +34,7 @@ public class AlertBuilder {
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        if(edittext.getText().toString() != null && edittext.getText().toString().length() > 0 && Helper.isNumeric(edittext.getText().toString()))
                         onButtonClick3.onConfirm(Long.valueOf(edittext.getText().toString()));
                     }
                 });

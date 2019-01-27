@@ -109,12 +109,14 @@ public class EpisodeListFragment extends SupportFragment {
         fastAdapter.withOnClickListener(new OnClickListener() {
             @Override
             public boolean onClick(@javax.annotation.Nullable View v, IAdapter adapter, IItem item, int position) {
-                EpisodeItem episodeItem = (EpisodeItem)item;
-                Episode episode = episodeItem.getEpisode();
-                if(episode != null){
-                    Intent intent = new Intent(getContext(),EpisodeDetailActivity.class);
-                    intent.putExtra("episode",new Gson().toJson(episode));
-                    startActivityForResult(intent,EPISODE_DETAIL_REQUEST_ID);
+                if(item.getClass() == EpisodeItem.class) {
+                    EpisodeItem episodeItem = (EpisodeItem) item;
+                    Episode episode = episodeItem.getEpisode();
+                    if (episode != null) {
+                        Intent intent = new Intent(getContext(), EpisodeDetailActivity.class);
+                        intent.putExtra("episode", new Gson().toJson(episode));
+                        startActivityForResult(intent, EPISODE_DETAIL_REQUEST_ID);
+                    }
                 }
                 return true;
             }

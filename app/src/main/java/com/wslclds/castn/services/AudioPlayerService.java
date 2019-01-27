@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -13,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.session.MediaController;
 import android.media.session.MediaSessionManager;
 import android.os.Binder;
 import android.os.Build;
@@ -34,6 +36,7 @@ import com.bumptech.glide.request.transition.Transition;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.android.exoplayer2.ExoPlayer;
 import com.wslclds.castn.activities.MainActivity;
@@ -103,10 +106,13 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
     public void onCreate() {
         super.onCreate();
         Realm.init(this);
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         //ACTION_AUDIO_BECOMING_NOISY -- change in audio outputs -- BroadcastReceiver
         registerBecomingNoisyReceiver();
         registerHeadsetPlugUnplugReceiver();
+        registerMediaButtonReceiver();
+
     }
 
     @Override
@@ -114,6 +120,7 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
         killMediaPlayer();
         unregisterBecomingNoisyReceiver();
         unregisterHeadsetPlugUnplugReceiver();
+        unregisterMediaButtonReceiver();
         removeTimer();
         episodes = null;
         super.onDestroy();
@@ -143,7 +150,6 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
         return START_NOT_STICKY;
     }
 
-
     //mediaplayer
     public void setAndPlay(String playlistId){
         this.playlistId = playlistId;
@@ -162,7 +168,7 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
         final Episode currentEpisode = getCurrentEpisode();
         final Download download = databaseManager.getDownload(currentEpisode.getEnclosureUrl());
         mediaPlayer = new MediaPlayer();
-
+        initMediaSession();
         try {
             if(download  == null){
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -216,10 +222,10 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
                 progressHandler.postDelayed(this,1000);
             }
         };
+
         progressHandler.postDelayed(progressRunnable,1000);
         onChange.onPlayingStateChanged(isPlaying());
         onChange.onEpisodeChanged(currentEpisode);
-        initMediaSession();
         buildNotification(true);
     }
 
@@ -243,7 +249,7 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
         mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
         mediaSession = new MediaSessionCompat(getApplicationContext(), MEDIA_SESSION_TAG);
         mediaSession.setActive(true);
-        mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+        mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
         updateMetaData(null);
         mediaSession.setCallback(new MediaSessionCompat.Callback() {
             @Override
@@ -258,6 +264,7 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
                 playPause();
             }
         });
+        mediaSession.setActive(true);
     }
 
     //notification
@@ -503,9 +510,19 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
         registerReceiver(becomingNoisyReceiver, intentFilter);
     }
 
+    private void registerMediaButtonReceiver(){
+        ComponentName componentName = new ComponentName(this,MediaButtonService.class);
+        audioManager.registerMediaButtonEventReceiver(componentName);
+    }
+
     private void registerHeadsetPlugUnplugReceiver(){
         IntentFilter intentFilter = new IntentFilter(AudioManager.ACTION_HEADSET_PLUG);
         registerReceiver(headsetPlugUnplugReceiver, intentFilter);
+    }
+
+    private void unregisterMediaButtonReceiver(){
+        ComponentName componentName = new ComponentName(this,MediaButtonService.class);
+        audioManager.unregisterMediaButtonEventReceiver(componentName);
     }
 
     private void unregisterBecomingNoisyReceiver(){
@@ -522,7 +539,6 @@ public class AudioPlayerService extends Service implements AudioManager.OnAudioF
 
     //audio manager
     private boolean requestAudioFocus() {
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int result = audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
         if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             //Focus gained

@@ -9,7 +9,6 @@ public class PlayerKillerService extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        System.out.println("killerr!!!!");
         Intent serviceIntent = new Intent(context,AudioPlayerService.class);
         serviceIntent.setAction(AudioPlayerService.ACTION_CLOSE);
         context.startService(serviceIntent);

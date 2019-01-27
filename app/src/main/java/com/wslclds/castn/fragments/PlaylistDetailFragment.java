@@ -198,9 +198,11 @@ public class PlaylistDetailFragment extends SupportFragment {
 
     @Override
     public void onDestroy() {
-        for(int i = 0; i < itemAdapter.getAdapterItems().size(); i++){
-            PlaylistEpisodeItem playlistEpisodeItem = (PlaylistEpisodeItem) itemAdapter.getAdapterItem(i);
-            databaseManager.updatePlaylistEpisodePosition(playlistEpisodeItem.getPlaylistEpisode().getId(),i);
+        if(itemAdapter != null){
+            for(int i = 0; i < itemAdapter.getAdapterItems().size(); i++){
+                PlaylistEpisodeItem playlistEpisodeItem = (PlaylistEpisodeItem) itemAdapter.getAdapterItem(i);
+                databaseManager.updatePlaylistEpisodePosition(playlistEpisodeItem.getPlaylistEpisode().getId(),i);
+            }
         }
         super.onDestroy();
     }

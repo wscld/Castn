@@ -52,7 +52,10 @@ public class StorageStatsItem extends AbstractItem<StorageStatsItem, StorageStat
             File castnFolder = new File(mainDir,"Castn");
             File podcastsFolder = new File(castnFolder,"Podcasts");
             long folderSize = getFolderSize(podcastsFolder);
-            int epsCount = podcastsFolder.listFiles().length;
+            int epsCount = 0;
+            if(podcastsFolder.exists() && podcastsFolder.isDirectory()){
+                epsCount = podcastsFolder.listFiles().length;
+            }
             podcastsSize.setText(Helper.bytesIntoHumanReadable(folderSize));
             if(epsCount == 1){
                 episodeCount.setText(epsCount +" Episode");
