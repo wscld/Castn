@@ -100,6 +100,9 @@ public class SettingsFragment extends SupportFragment {
         MenuItem i6 = new MenuItem("About",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_information_variant).color(Color.WHITE).paddingDp(9));
         itemAdapter.add(i6);
 
+        MenuItem i7 = new MenuItem("Privacy Policy",new IconicsDrawable(getContext(),CommunityMaterial.Icon.cmd_file_document).color(Color.WHITE).paddingDp(9));
+        itemAdapter.add(i7);
+
 
         fastAdapter.withOnClickListener(new OnClickListener() {
             @Override
@@ -156,6 +159,10 @@ public class SettingsFragment extends SupportFragment {
                     customTabsIntent.launchUrl(getContext(), Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSeo5IvSkT5hB14aSHin6dnJ5YhDLUxqH-fY7VRpKAD3J0O-tg/viewform?usp=sf_link"));
                 }else if(position == 5){
                     start(AboutFragment.newInstance());
+                }else if(position == 6){
+                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                    CustomTabsIntent customTabsIntent = builder.build();
+                    customTabsIntent.launchUrl(getContext(), Uri.parse("https://wslclds.com/castn/privacy_policy/"));
                 }
 
                 return true;

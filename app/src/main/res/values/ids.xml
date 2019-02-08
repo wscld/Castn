@@ -16,4 +16,5 @@
     <item name="podcast_grid_item_id" type="id" />
     <item name="license_item_id" type="id" />
     <item name="storage_stats_item_id" type="id" />
+    <item name="resume_item_id" type="id" />
 </resources>

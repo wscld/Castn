@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Environment;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -37,6 +38,37 @@ public class Helper {
     public Helper(Context context){
         this.context = context;
     }
+
+    public File getInternalStorageFolder(){
+        File mainDir = Environment.getExternalStorageDirectory();
+        File castnFolder = new File(mainDir,"Castn");
+        if(!castnFolder.isDirectory()){
+            castnFolder.mkdir();
+        }
+
+        File podcastsFolder = new File(castnFolder,"Podcasts");
+        if(!podcastsFolder.isDirectory()){
+            podcastsFolder.mkdir();
+        }
+
+        return podcastsFolder;
+    }
+
+    public File getSDStorageFolder(){
+        File mainDir = Environment.getExternalStorageDirectory();
+        File castnFolder = new File(mainDir,"Castn");
+        if(!castnFolder.isDirectory()){
+            castnFolder.mkdir();
+        }
+
+        File podcastsFolder = new File(castnFolder,"Podcasts");
+        if(!podcastsFolder.isDirectory()){
+            podcastsFolder.mkdir();
+        }
+
+        return podcastsFolder;
+    }
+
 
     public static Playlist createPlaylistObject(String playlistName, boolean publicAvailable){
         Playlist playlist = new Playlist();

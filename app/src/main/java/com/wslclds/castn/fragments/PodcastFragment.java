@@ -32,7 +32,6 @@ import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
@@ -64,8 +63,8 @@ import com.wslclds.castn.GlideApp;
 import com.wslclds.castn.items.EpisodeItem;
 import com.wslclds.castn.items.FooterItem;
 import com.wslclds.castn.R;
-import com.wslclds.castn.items.TimelineItem;
 
+import io.realm.Sort;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -111,6 +110,9 @@ public class PodcastFragment extends SupportFragment {
     AsyncTask loadEpisodesTask;
     AsyncTask loadPodcastDataTask;
     private int EPISODE_DETAIL_REQUEST_ID = 1;
+    private boolean filterReverse;
+    private boolean filterOnlyDownloaded;
+    private boolean filterOnlyUnfinished;
 
     public static PodcastFragment newInstance(String url) {
 
@@ -214,6 +216,17 @@ public class PodcastFragment extends SupportFragment {
             public void onClick(View v) {
                 ArrayList<String> items = new ArrayList<>();
                 items.add("Download");
+                if(filterReverse){
+                    items.add("Newest episodes first");
+                }else {
+                    items.add("Oldest episodes first");
+                }
+
+                items.add("Show only downloaded episodes");
+                items.add("Show only unfinished episodes");
+                if(filterOnlyDownloaded || filterOnlyUnfinished){
+                    items.add("Show all episodes");
+                }
 
                 new PopUpMenuBuilder(getContext(), v, items, new PopUpMenuBuilder.WithOnClickListener() {
                     @Override
@@ -236,6 +249,26 @@ public class PodcastFragment extends SupportFragment {
 
                                 }
                             }).show();
+                        }else if(position == 1){
+                            filterReverse = !filterReverse;
+                            filterOnlyUnfinished = false;
+                            filterOnlyDownloaded = false;
+                            getEpisodesOffline();
+                        }else if(position == 2){
+                            filterReverse = false;
+                            filterOnlyUnfinished = false;
+                            filterOnlyDownloaded = true;
+                            getEpisodesOffline();
+                        }else if(position == 3){
+                            filterReverse = false;
+                            filterOnlyUnfinished = true;
+                            filterOnlyDownloaded = false;
+                            getEpisodesOffline();
+                        }else {
+                            filterReverse = false;
+                            filterOnlyUnfinished = false;
+                            filterOnlyDownloaded = false;
+                            getEpisodesOffline();
                         }
                     }
                 }).showMenu();
@@ -342,7 +375,7 @@ public class PodcastFragment extends SupportFragment {
             protected void onPostExecute(Object o) {
                 loadPodcastData();
                 if(databaseManager.isSubscribed(currentUrl)){
-                    getEpisodesOffline(false,false,false);
+                    getEpisodesOffline();
                 }else {
                     getSomeEpisodes();
                 }
@@ -352,17 +385,20 @@ public class PodcastFragment extends SupportFragment {
     }
 
     @SuppressLint("StaticFieldLeak")
-    private void getEpisodesOffline(boolean onlyDownloaded, boolean onlyUnfinished, boolean reverse){
+    private void getEpisodesOffline(){
         getEpisodesOfflineTask = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] objects) {
                 DatabaseManager databaseManager = new DatabaseManager(getContext());
-                if(reverse){
-                    episodes = databaseManager.getEpisodesAscending(currentUrl);
+                if(filterReverse){
+                    episodes = databaseManager.getEpisodes(currentUrl, Sort.ASCENDING);
+                    if(episodes.size() > 0){
+                        episodes.remove(0);
+                    }
                 }else {
-                    episodes = databaseManager.getEpisodes(currentUrl);
+                    episodes = databaseManager.getEpisodes(currentUrl, Sort.DESCENDING);
                 }
-                if(onlyDownloaded){
+                if(filterOnlyDownloaded){
                     ArrayList<Episode> tempEpisodes = new ArrayList<>();
                     for(Episode episode : episodes){
                         if(databaseManager.getDownloadStatus(episode.getEnclosureUrl()) == Helper.STATE_DOWNLOADED){
@@ -370,11 +406,11 @@ public class PodcastFragment extends SupportFragment {
                         }
                     }
                     episodes.clear();
-                    episodes = tempEpisodes;
+                    episodes.addAll(tempEpisodes);
                     tempEpisodes.clear();
                 }
 
-                if(onlyUnfinished){
+                if(filterOnlyUnfinished){
                     ArrayList<Episode> tempEpisodes = new ArrayList<>();
                     for(Episode episode : episodes){
                         if(!databaseManager.isEpisodeListened(episode.getEnclosureUrl())){
@@ -382,7 +418,7 @@ public class PodcastFragment extends SupportFragment {
                         }
                     }
                     episodes.clear();
-                    episodes = tempEpisodes;
+                    episodes.addAll(tempEpisodes);
                     tempEpisodes.clear();
                 }
                 return null;
@@ -394,14 +430,15 @@ public class PodcastFragment extends SupportFragment {
                 episodeCount.setText(episodes.size()+" episodes");
 
                 if(podcast != null){
+                    itemAdapter.clear();
                     //load podcast
                     loadPodcastData();
                     //load episodes
                     loadEpisodes(10,500);
                 }
-                if(episodes.size() == 0){
+                if(episodes.size() == 0 && !filterReverse && !filterOnlyUnfinished && !filterOnlyDownloaded){
                     getSomeEpisodes();
-                }else {
+                }else if(!filterReverse && !filterOnlyUnfinished && !filterOnlyDownloaded){
                     loadNewEpisodes();
                 }
             }
@@ -517,6 +554,7 @@ public class PodcastFragment extends SupportFragment {
                 int finalLimit = limit;
                 if(episodes != null && itemAdapter != null){
                     finalLimit = finalLimit+itemAdapter.getAdapterItemCount();
+
                     if(finalLimit > episodes.size()){
                         finalLimit = episodes.size();
                     }

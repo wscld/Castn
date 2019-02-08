@@ -42,6 +42,7 @@ import com.wslclds.castn.factory.objects.PodcastAndEpisode;
 import com.wslclds.castn.factory.objects.ToolbarEvent;
 import com.wslclds.castn.factory.objects.UpdateEvent;
 import com.wslclds.castn.items.FooterItem;
+import com.wslclds.castn.items.ResumeItem;
 import com.wslclds.castn.items.TimelineItem;
 import com.wslclds.castn.R;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -139,6 +140,7 @@ public class TimelineFragment extends SupportFragment {
                 loadData(new Date().getTime(),50,500,true);
             }
         });
+
         loadData(new Date().getTime(),50,1000,false);
     }
 

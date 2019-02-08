@@ -48,6 +48,7 @@ public class DownloadService extends Service {
 
     private DownloadListener downloadListener;
     private DatabaseManager databaseManager;
+    private Helper helper;
     private ArrayList<Download> downloadQueue;
     private Notification.Builder notificationBuilder;
     private NotificationManager notificationManager;
@@ -84,6 +85,7 @@ public class DownloadService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Realm.init(this);
+        helper = new Helper(this);
 
         String action = null;
         if(intent != null){
@@ -129,20 +131,6 @@ public class DownloadService extends Service {
         return null;
     }
 
-    public File getStorageFolder(){
-        File mainDir = Environment.getExternalStorageDirectory();
-        File castnFolder = new File(mainDir,"Castn");
-        if(!castnFolder.isDirectory()){
-            castnFolder.mkdir();
-        }
-
-        File podcastsFolder = new File(castnFolder,"Podcasts");
-        if(!podcastsFolder.isDirectory()){
-            podcastsFolder.mkdir();
-        }
-
-        return podcastsFolder;
-    }
 
     public void startDownload(){
         if(downloadQueue != null && downloadQueue.size() > 0 && !downloadRunning) {
@@ -152,7 +140,7 @@ public class DownloadService extends Service {
             String image = downloadQueue.get(0).getImage();
             String enclosureUrl = downloadQueue.get(0).getEnclosureUrl();
             Episode episode = databaseManager.getEpisode(enclosureUrl);
-            String directory = getStorageFolder().toString();
+            String directory = helper.getInternalStorageFolder().toString();
             //String fileName = checkFilename(directory,episode.getPodcastTitle()+" - "+episode.getTitle());
             String fileName = getFileName(enclosureUrl);
             String fileDirectory = directory+"/"+fileName;

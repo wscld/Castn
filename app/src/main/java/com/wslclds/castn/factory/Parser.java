@@ -91,38 +91,40 @@ public class Parser {
     public ArrayList<Episode> parseEpisodesUntil(String url, long date, long cacheTime){
         ArrayList<Episode> episodes = new ArrayList<>();
 
-        Document doc = Jsoup.parse(new DataGetter(context).getFeed(url,cacheTime));
-        Element podcastChanel = doc.select("channel").first();
-        final Elements items = doc.select("item");
-        ElementsGetter podcastElementsGetter = new ElementsGetter(podcastChanel);
+        if(url != null && url.length() > 0) {
+            Document doc = Jsoup.parse(new DataGetter(context).getFeed(url, cacheTime));
+            Element podcastChanel = doc.select("channel").first();
+            final Elements items = doc.select("item");
+            ElementsGetter podcastElementsGetter = new ElementsGetter(podcastChanel);
 
-        for (Element item : items) {
-            ElementsGetter elementsGetter = new ElementsGetter(item);
-            Episode episode = new Episode();
-            episode.setId(Helper.urlToId(elementsGetter.getEpisodeEnclosureUrl()));
-            episode.setTitle(elementsGetter.getEpisodeTitle());
-            episode.setPodcastTitle(podcastElementsGetter.getPodcastTitle());
-            episode.setImage(elementsGetter.getEpisodeImage());
-            episode.setPubDate(elementsGetter.getEpisodePubDate());
-            episode.setDescription(elementsGetter.getEpisodeDescription());
-            episode.setPlainDescription(elementsGetter.getEpisodePlainDescription());
-            episode.setAuthor(elementsGetter.getEpisodeAuthor());
-            episode.setPodcastAuthor(elementsGetter.getPodcastAuthor());
-            episode.setCategory(elementsGetter.getEpisodeCategory());
-            episode.setDuration(elementsGetter.getEpisodeDuration());
-            episode.setEnclosureLength(elementsGetter.getEpisodeEnclosureLength());
-            episode.setEnclosureType(elementsGetter.getEpisodeEnclosureType());
-            episode.setEnclosureUrl(elementsGetter.getEpisodeEnclosureUrl());
-            episode.setUrl(url);
-            episode.setExplicit(elementsGetter.isEpisodeExplicit());
-            if (episode.getImage().equals("")) {
-                episode.setImage(podcastElementsGetter.getPodcastImage());
-            }
+            for (Element item : items) {
+                ElementsGetter elementsGetter = new ElementsGetter(item);
+                Episode episode = new Episode();
+                episode.setId(Helper.urlToId(elementsGetter.getEpisodeEnclosureUrl()));
+                episode.setTitle(elementsGetter.getEpisodeTitle());
+                episode.setPodcastTitle(podcastElementsGetter.getPodcastTitle());
+                episode.setImage(elementsGetter.getEpisodeImage());
+                episode.setPubDate(elementsGetter.getEpisodePubDate());
+                episode.setDescription(elementsGetter.getEpisodeDescription());
+                episode.setPlainDescription(elementsGetter.getEpisodePlainDescription());
+                episode.setAuthor(elementsGetter.getEpisodeAuthor());
+                episode.setPodcastAuthor(elementsGetter.getPodcastAuthor());
+                episode.setCategory(elementsGetter.getEpisodeCategory());
+                episode.setDuration(elementsGetter.getEpisodeDuration());
+                episode.setEnclosureLength(elementsGetter.getEpisodeEnclosureLength());
+                episode.setEnclosureType(elementsGetter.getEpisodeEnclosureType());
+                episode.setEnclosureUrl(elementsGetter.getEpisodeEnclosureUrl());
+                episode.setUrl(url);
+                episode.setExplicit(elementsGetter.isEpisodeExplicit());
+                if (episode.getImage().equals("")) {
+                    episode.setImage(podcastElementsGetter.getPodcastImage());
+                }
 
-            if(episode.getPubDate() <= date){
-                break;
-            }else {
-                episodes.add(episode);
+                if (episode.getPubDate() <= date) {
+                    break;
+                } else {
+                    episodes.add(episode);
+                }
             }
         }
         return episodes;
